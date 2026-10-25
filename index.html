@@ -121,6 +121,18 @@ h1{margin:4px 0 2px;font-size:clamp(32px,9vw,44px);font-weight:900;letter-spacin
 #menu::-webkit-scrollbar{width:8px}
 #menu::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:8px}
 #menu::-webkit-scrollbar-track{background:transparent}
+
+/* ====== شريط علوي مصغّر حتى لا يغطي عناصر اللعبة ====== */
+#hud{padding:calc(env(safe-area-inset-top,0px) + 3px) 8px 0}
+#hud .bar{padding:2px 6px;border-radius:16px;gap:3px}
+#hud .ib{padding:4px 9px;font-size:12px;border-radius:11px;box-shadow:0 3px 0 #b3a3e0;margin:0 1px}
+#hud .ib:active{transform:translateY(2px);box-shadow:0 1px 0 #b3a3e0}
+#ttl{font-size:12px}
+#st{font-size:15px;text-shadow:0 1px 0 #b38000}
+#tm{font-size:11px;padding:3px 7px;border-radius:10px}
+#pr{margin:4px auto 0;padding:4px 14px;border-radius:14px;border-width:2px;font-size:clamp(12px,2.4vw,15px);background:rgba(22,10,53,.6);box-shadow:0 2px 0 #4a2a9a,0 4px 10px rgba(0,0,0,.25)}
+#mt{margin:4px auto 0;height:5px;width:30%;max-width:150px}
+#hud #bk{background:linear-gradient(90deg,#ffd23f var(--p,0%),transparent var(--p,0%)),linear-gradient(145deg,#fff,#e9e2ff)}
 </style>
 <base target="_blank">
 </head>
@@ -167,7 +179,7 @@ h1{margin:4px 0 2px;font-size:clamp(32px,9vw,44px);font-weight:900;letter-spacin
 
 <div id="hud" hidden>
   <div class="bar glass">
-    <button class="ib" onclick="back()">⬅ رجوع</button>
+    <button class="ib" id="bk" onclick="back()">⬅ رجوع</button>
     <b id="ttl"></b>
     <span id="st">⭐ 0</span>
     <span id="tm">30:00</span>
@@ -285,7 +297,7 @@ function start(k,btn){
 /* بدء لعبة (الكاميرا تعمل مسبقًا) */
 function begin(k){
  game=k;clearInterval(tuI);$('end').hidden=true;
- $('menu').hidden=true;$('hud').hidden=false;$('ttl').textContent=TT[k];$('pr').hidden=(k=='gmenu');$('mt').hidden=(k=='gmenu');
+ $('menu').hidden=true;$('hud').hidden=false;$('ttl').textContent=TT[k];$('bk').textContent=(gNav&&k!='gmenu')?'🖐️ لوّح للرجوع':'⬅ رجوع';$('bk').style.setProperty('--p','0%');$('pr').hidden=(k=='gmenu');$('mt').hidden=(k=='gmenu');
  stars=0;goal=1e9;$('st').textContent='⭐ 0';P=[];music=false;
  S={t0:Date.now(),pr:0,an:0,hold:0,b:[],sp:0,cnt:0,ph:'move',sc:0,bad:0,tgt:-1,end:Date.now()+18e5,over:0};
  run=true;
@@ -322,7 +334,7 @@ function fr(x0,y0,x1,y1){if(!mot)return 0;const a=Math.max(0,x0*AW|0),b=Math.max
 function hm(r,gg,b,fn){const m=Math.max(r,gg,b),n=Math.min(r,gg,b),d=m-n;if(m<90||d/m<.5)return false;const h=m==r?((gg-b)/d+6)%6:m==gg?(b-r)/d+2:(r-gg)/d+4;return fn(h*60)}
 function cf(x0,y0,x1,y1,fn){if(!frame)return 0;const G=Math.min(3,Math.max(1,110/Math.max(20,avgB)));const a=x0*AW|0,b=y0*AH|0,c=Math.ceil(x1*AW),d=Math.ceil(y1*AH);let k=0,t=0;for(let y=b;y<d;y++)for(let x=a;x<c;x++){const o=(y*AW+x)*4;if(hm(Math.min(255,frame[o]*G),Math.min(255,frame[o+1]*G),Math.min(255,frame[o+2]*G),fn))k++;t++}return t?k/t:0}
 function tick(){if(!run)return;const rem=Math.max(0,S.end-Date.now()),p2=n=>(n<10?'0':'')+n;$('tm').textContent=p2(rem/60000|0)+':'+p2((rem/1000|0)%60);if(rem<=0&&!S.over)timeUp();$('ttl').textContent=TT[game]+(low?' 🌙':'');$('mt').firstChild.style.width=lv*100+'%';const k=game,now=Date.now();
- if(gNav&&k!='gmenu'){if(fr(.9,.62,1,.8)>.16)S.hz=(S.hz||0)+1;else S.hz=Math.max(0,(S.hz||0)-1);if(S.hz>=28){S.hz=0;gmLaunch('gmenu');return}}
+ if(gNav&&k!='gmenu'){if(fr(.78,0,1,.17)>.18)S.hz=(S.hz||0)+1;else S.hz=Math.max(0,(S.hz||0)-1);$('bk').style.setProperty('--p',Math.min(100,S.hz/25*100)+'%');if(S.hz>=25){S.hz=0;gmLaunch('gmenu');return}}
  if(k=='dance'){if(sm>(age==3?.03:.06))S.pr+=lv;const need=age==3?18:28;if(S.pr>=need){S.pr=0;S.an++;burst(W/2,H/2);ok()}else if(now-S.t0>14000){S.t0=now;say('تحرّك أكثر! هيا نرقص')}}
  else if(k=='copy'){if(!S.m)return;const m=S.m[2],f=m=='top'?fr(0,0,1,.38):m=='bot'?fr(0,.62,1,1):m=='left'?fr(0,0,.4,1):m=='right'?fr(.6,0,1,1):sm,th=age==3?.07:.1;
   if(f>th)S.hold++;else S.hold=Math.max(0,S.hold-1);const need=age==3?7:6;S.pg=S.hold/need;
@@ -383,7 +395,7 @@ function drawCam(w){
   if(PX>2||PY>2){g.strokeStyle='rgba(255,255,255,.35)';g.lineWidth=3;g.strokeRect(PX,PY,W,H)}
 }
 
-function draw(t){g.shadowBlur=0;g.shadowColor='transparent';g.shadowOffsetY=0;g.globalAlpha=1;drawCam(WRL[game]);g.save();g.translate(PX,PY);g.beginPath();g.rect(0,0,W,H);g.clip();draw2(t);if(gNav&&game!='gmenu')homeZone();g.restore()}
+function draw(t){g.shadowBlur=0;g.shadowColor='transparent';g.shadowOffsetY=0;g.globalAlpha=1;drawCam(WRL[game]);g.save();g.translate(PX,PY);g.beginPath();g.rect(0,0,W,H);g.clip();draw2(t);g.restore()}
 
 function foxChar(x,y,s,pose,t){
   const o='#ff8c42',od='#d95f14',c='#fff1de';
