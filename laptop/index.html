@@ -75,7 +75,8 @@ h1{font-size:clamp(38px,6vw,68px);font-weight:900;background:linear-gradient(90d
     <button class="tile hot" data-g="balloons" style="--c1:#ffd23f;--c2:#ff9a2e"><i>🎈</i>فرقعة البالونات</button>
     <button class="tile hot" data-g="dance" style="--c1:#ff8a5c;--c2:#ff4f7b"><i>💃</i>ارقص مع الحيوانات</button>
   </div>
-  <div id="tools"><select id="camsel" title="الكاميرا"></select><button id="fs">⛶ ملء الشاشة</button></div>
+  <div id="tools"><select id="camsel" title="الكاميرا"></select><button id="rc">🔄 تحديث الكاميرات</button><button id="fs">⛶ ملء الشاشة</button></div>
+  <div id="caminfo" class="sub" style="font-size:15px;min-height:22px"></div>
 </div>
 
 <div id="hud" hidden>
@@ -183,15 +184,19 @@ async function fillCams(){
   const ds=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='videoinput');
   const sel=$('camsel');sel.innerHTML='';
   ds.forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent='📷 '+(d.label||('كاميرا '+(i+1)));sel.appendChild(o)});
-  let cur=stream.getVideoTracks()[0].getSettings().deviceId;
-  const internal=/facetime|built-?in|مدمج/i,curD=ds.find(d=>d.deviceId===cur);
+  let cur=stream&&stream.getVideoTracks()[0]?stream.getVideoTracks()[0].getSettings().deviceId:null;
+  const internal=/facetime|built-?in|isight|مدمج/i,curD=ds.find(d=>d.deviceId===cur);
   if(ds.length>1&&curD&&internal.test(curD.label)){
     const ext=ds.find(d=>!internal.test(d.label));
-    if(ext){await startCam(ext.deviceId);cur=ext.deviceId}
+    if(ext){try{await startCam(ext.deviceId);cur=ext.deviceId}catch(e){try{await startCam(cur)}catch(_){}$('caminfo').textContent='تعذّر فتح الكاميرا الخارجية: '+(e.name||e.message)+' (قد تكون مستخدمة من برنامج آخر)'}}
   }
-  sel.value=cur;
+  if(cur)sel.value=cur;
+  const info=$('caminfo');
+  if(!info.textContent.startsWith('تعذّر'))info.textContent='الكاميرات المكتشفة: '+ds.length+(ds.length<2?' — لم يرَ المتصفح الكاميرا الخارجية. تأكد من توصيلها ومن إذن Chrome في إعدادات الخصوصية، ثم اضغط تحديث.':'');
 }
-$('camsel').onchange=async e=>{try{await startCam(e.target.value)}catch(err){console.error(err)}};
+$('camsel').onchange=async e=>{const prev=stream&&stream.getVideoTracks()[0]?stream.getVideoTracks()[0].getSettings().deviceId:null;try{await startCam(e.target.value);$('caminfo').textContent=''}catch(err){if(prev){try{await startCam(prev);e.target.value=prev}catch(_){}}$('caminfo').textContent='تعذّر فتح هذه الكاميرا: '+(err.name||err.message)+' (قد تكون مستخدمة من برنامج آخر)'}};
+$('rc').onclick=()=>{$('caminfo').textContent='';fillCams().catch(console.error)};
+if(navigator.mediaDevices&&navigator.mediaDevices.addEventListener)navigator.mediaDevices.addEventListener('devicechange',()=>{if(stream){$('caminfo').textContent='';fillCams().catch(console.error)}});
 $('fs').onclick=()=>{const d=document.documentElement;if(document.fullscreenElement)document.exitFullscreen();else (d.requestFullscreen||d.webkitRequestFullscreen).call(d)};
 
 function mkLm(d){return PoseLandmarker.createFromOptions(fileset,{baseOptions:{modelAssetPath:MODEL,delegate:d},runningMode:'VIDEO',numPoses:2,minPoseDetectionConfidence:.4,minPosePresenceConfidence:.4,minTrackingConfidence:.4})}
