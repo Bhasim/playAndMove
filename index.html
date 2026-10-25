@@ -11,588 +11,141 @@ html,body{height:100%;margin:0;overflow:hidden;background:#1a0b36;font-family:sy
 #c{position:fixed;left:0;top:0;width:100%;height:100%;display:block}
 [hidden]{display:none!important}
 button{font:inherit;color:#fff;border:0;cursor:pointer}
-.glass{background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:2px solid rgba(255,255,255,.4);box-shadow:0 8px 32px rgba(0,0,0,.35)}
-#menu{position:fixed;inset:0;overflow:auto;text-align:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 14px calc(env(safe-area-inset-bottom,0px) + 16px);background:radial-gradient(circle at 15% 8%,#ff5fa2 0,transparent 42%),radial-gradient(circle at 88% 28%,#35c8ff 0,transparent 42%),radial-gradient(circle at 40% 98%,#ffc93c 0,transparent 38%),#1a0b36}
-h1{margin:6px 0 2px;font-size:36px;text-shadow:0 4px 10px rgba(0,0,0,.4)}
-.sub{opacity:.95;margin:0 0 14px;font-size:16px;font-weight:600}
+.glass{background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.35);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+#menu{position:fixed;inset:0;overflow:auto;text-align:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 14px calc(env(safe-area-inset-bottom,0px) + 16px);background:radial-gradient(circle at 15% 8%,#ff4f93 0,transparent 45%),radial-gradient(circle at 88% 28%,#2fd5f6 0,transparent 45%),radial-gradient(circle at 40% 98%,#ffd23f 0,transparent 40%),#1a0b36}
+h1{margin:6px 0 2px;font-size:34px;text-shadow:0 3px 0 rgba(0,0,0,.3)}
+.sub{opacity:.95;margin:0 0 12px;font-size:15px}
 .ages{display:flex;gap:10px;max-width:520px;margin:0 auto 14px}
-.ages button{flex:1;padding:12px;border-radius:24px;font-size:18px;font-weight:800;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);transition:all .2s}
-.ages button.on{background:#fff;color:#3b1e7b;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.ages button{flex:1;padding:12px;border-radius:20px;font-size:18px;font-weight:700;background:rgba(255,255,255,.18)}
+.ages button.on{background:#fff;color:#3b188c}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px;margin:0 auto}
-.card{border-radius:28px;padding:16px 8px;font-size:19px;font-weight:800;line-height:1.35;box-shadow:0 6px 0 rgba(0,0,0,.28),0 12px 24px rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.3);transition:transform .1s}
+.card{border-radius:28px;padding:16px 8px;font-size:19px;font-weight:800;line-height:1.35;box-shadow:0 6px 0 rgba(0,0,0,.25),0 12px 24px rgba(0,0,0,.22)}
 .card:active{transform:translateY(3px)}
 .card:last-child{grid-column:span 2}
-.card i{display:block;font-style:normal;font-size:48px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}
-.card small{display:block;font-size:12px;font-weight:600;opacity:.95}
-#err{color:#ffb3b3;min-height:22px;margin-top:12px;font-size:15px;font-weight:bold}
-.tip{font-size:13px;opacity:.9;max-width:520px;margin:8px auto;line-height:1.4}
-
-/* HUD المحدث بتصميم الكبسولة المستوحى من الصور */
-#hud{position:fixed;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 0;pointer-events:none;z-index:5}
+.card i{display:block;font-style:normal;font-size:48px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
+.card small{display:block;font-size:12px;font-weight:500;opacity:.95}
+#err{color:#ffd6d6;min-height:22px;margin-top:12px;font-size:15px;font-weight:bold}
+.tip{font-size:13px;opacity:.85;max-width:520px;margin:6px auto}
+#hud{position:fixed;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 6px) 10px 0;pointer-events:none}
 #hud>*{pointer-events:auto}
-.bar{display:flex;align-items:center;justify-content:space-between;border-radius:22px;padding:4px 10px;background:rgba(20,10,45,.65);border:2px solid rgba(255,255,255,.4);backdrop-filter:blur(10px)}
-.ib{background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,.15));border:1.5px solid rgba(255,255,255,.6);border-radius:14px;padding:5px 12px;font-size:14px;font-weight:800;margin:0 2px;text-shadow:0 1px 2px rgba(0,0,0,.4)}
-#ttl{font-size:15px;font-weight:800;color:#ffea78;text-shadow:0 2px 4px rgba(0,0,0,.6)}
-
-/* كبسولة النجوم المستوحاة تماماً من الكبسولة المضيئة أسفل يمين الصور */
-#score-capsule{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);right:16px;background:linear-gradient(135deg,#00a8ff,#0066cc);border:3px solid #ffffff;border-radius:20px;padding:6px 18px;display:flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(0,120,255,.6),inset 0 2px 4px rgba(255,255,255,.7);z-index:6;pointer-events:none}
-#score-capsule i{font-style:normal;font-size:24px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
-#st{font-size:22px;font-weight:900;color:#ffffff;text-shadow:0 2px 4px rgba(0,0,0,.5);font-family:system-ui,sans-serif}
-
-#pr{margin:6px auto 0;width:fit-content;max-width:90%;border-radius:20px;padding:6px 18px;font-size:clamp(14px,3.5vw,20px);font-weight:900;text-align:center;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(240,240,255,.85));color:#2a085c;box-shadow:0 8px 24px rgba(0,0,0,.4),0 0 15px rgba(255,255,255,.6);border:2px solid #ffffff}
-#mt{margin:6px auto 0;width:45%;max-width:240px;height:8px;border-radius:10px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.4);overflow:hidden}
-#mt i{display:block;height:100%;width:0;background:linear-gradient(90deg,#00ff88,#ffd23f,#ff3d67);box-shadow:0 0 8px #00ff88}
-
-#bn{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:12vw;font-weight:900;color:#fff;-webkit-text-stroke:3px #ff2a8d;paint-order:stroke fill;text-shadow:0 0 30px #ff2a8d,0 6px 0 rgba(0,0,0,.4);pointer-events:none;opacity:0;transform:scale(.3) rotate(-5deg);transition:all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);text-align:center;padding:0 10px;z-index:10}
-#bn.on{opacity:1;transform:scale(1) rotate(0deg)}
-
-#end{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);width:min(92vw,420px);border-radius:28px;padding:16px;text-align:center;background:rgba(26,11,54,.94);border:2px solid rgba(255,255,255,.5);box-shadow:0 10px 40px rgba(0,0,0,.6);z-index:8}
-#end h2{margin:0 0 6px;font-size:22px;color:#ffd23f}#end p{font-size:16px;margin:4px 0 12px}
-#end button{display:block;width:100%;margin:8px 0;padding:12px;border-radius:20px;font-size:17px;font-weight:800;background:linear-gradient(135deg,#ff5fa2,#e02875);box-shadow:0 4px 12px rgba(255,95,162,.4)}
-#end button+button{background:rgba(255,255,255,.2);box-shadow:none}
-
+.bar{display:flex;align-items:center;justify-content:space-between;border-radius:24px;padding:4px 10px;background:rgba(20,10,45,.65);border:2px solid rgba(255,255,255,.4)}
+.ib{background:rgba(255,255,255,.22);border-radius:14px;padding:5px 12px;font-size:14px;margin:0 2px;font-weight:700}
+#ttl{font-size:15px;font-weight:800}
+#st-pill{background:linear-gradient(135deg,#00d2ff,#0072ff);border-radius:20px;padding:4px 14px;font-size:16px;font-weight:900;border:2px solid #fff;box-shadow:0 0 12px rgba(0,210,255,.6)}
+#pr{margin:6px auto 0;width:fit-content;max-width:100%;border-radius:20px;padding:6px 18px;font-size:clamp(14px,3.5vw,20px);font-weight:900;text-align:center;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.5);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+#mt{margin:6px auto 0;width:40%;max-width:220px;height:7px;border-radius:10px;background:rgba(0,0,0,.4);overflow:hidden;border:1px solid rgba(255,255,255,.3)}
+#mt i{display:block;height:100%;width:0;background:linear-gradient(90deg,#00f2fe,#4facfe,#ff0844)}
+#bn{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:12vw;font-weight:900;color:#fff;-webkit-text-stroke:3px #ff2a8d;paint-order:stroke fill;text-shadow:0 0 30px #ff2a8d,0 6px 0 rgba(0,0,0,.3);pointer-events:none;opacity:0;transform:scale(.4);transition:all .25s;text-align:center;padding:0 10px}
+#bn.on{opacity:1;transform:scale(1)}
+#end{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);transform:translateX(-50%);width:min(90vw,400px);border-radius:28px;padding:16px;text-align:center;background:rgba(25,10,50,.92);border:2px solid rgba(255,255,255,.3)}
+#end h2{margin:0 0 6px;font-size:22px}#end p{font-size:15px;margin:4px 0 10px}
+#end button{display:block;width:100%;margin:6px 0;padding:11px;border-radius:18px;font-size:17px;font-weight:800;background:linear-gradient(135deg,#ff4f93,#ff2a55)}
+#end button+button{background:rgba(255,255,255,.2)}
 #v{position:fixed;width:2px;height:2px;opacity:0;pointer-events:none}
 @media(max-height:520px){#bn{font-size:8vw}}
-
-#studio{position:fixed;inset:0;background:rgba(15,5,35,.95);display:flex;align-items:center;justify-content:center;padding:12px;z-index:20}
-.sbox{width:min(94vw,460px);border-radius:28px;padding:20px;text-align:center}
-.srow{display:flex;gap:10px;justify-content:space-between;align-items:center;margin:8px 0}
-#stx{font-size:clamp(20px,5.5vw,30px);font-weight:800;margin:12px 0;min-height:2.6em;color:#ffea78}
-.sb{flex:1;padding:12px;border-radius:18px;font-size:16px;font-weight:800;background:linear-gradient(135deg,#7a4ae8,#5b25d6);border:1px solid rgba(255,255,255,.3);margin:4px 0;width:100%}
-#srec.rec{background:linear-gradient(135deg,#ff3552,#c4122c);animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+#studio{position:fixed;inset:0;background:rgba(15,5,35,.95);display:flex;align-items:center;justify-content:center;padding:12px;z-index:9}
+.sbox{width:min(94vw,460px);border-radius:28px;padding:18px;text-align:center}
+.srow{display:flex;gap:8px;justify-content:space-between;align-items:center;margin:6px 0}
+#stx{font-size:clamp(20px,5.5vw,30px);font-weight:800;margin:10px 0;min-height:2.6em}
+.sb{flex:1;padding:12px;border-radius:18px;font-size:16px;font-weight:700;background:#6c35de;margin:4px 0;width:100%}
+#srec.rec{background:#e52d42}
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
 <video id="v" playsinline muted autoplay></video>
-
 <section id="menu">
   <h1>🎈 العب وتحرّك</h1>
   <p class="sub">ألعاب تلعبها بحركتك أمام الكاميرا، بدون لمس الشاشة</p>
   <div class="ages"><button id="a3" class="on" onclick="setAge(3)">👶 عمر 3 سنوات</button><button id="a5" onclick="setAge(5)">🧒 عمر 5 سنوات</button></div>
   <div class="cards">
-    <button class="card" style="background:linear-gradient(145deg,#ffb347,#ff6a3d)" onclick="start('fruit')"><i>🍊</i>قطف الثمار المضيئة<small>مدّ يدك للأعلى واقطفها</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#37c8d8,#2a6fd8)" onclick="start('rocks')"><i>💎</i>حطّم الصخور<small>اضرب الصخرة بيدك لتخرج الجواهر</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#b784ff,#ff6fb1)" onclick="start('animals')"><i>🐰</i>قلّد الحيوانات<small>اقفز، افرد جناحيك، اجلس، تمايل</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#7fdc5a,#2f9a4a)" onclick="start('hedge')"><i>🦔</i>اصطد القنافذ<small>المس القنافذ التي تمرّ بيدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#ffd84d,#7dff9a)" onclick="start('pads')"><i>👣</i>ادعس الدوائر<small>ادعس الدائرة المضيئة بقدمك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ff9d2e,#ff5e28)" onclick="start('fruit')"><i>🍊</i>قطف الثمار المضيئة<small>مدّ يدك للأعلى واقطفها</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#2fd5f6,#1e70eb)" onclick="start('rocks')"><i>💎</i>حطّم الصخور<small>اضرب الصخرة بيدك لتخرج الجواهر</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#a862ff,#ff59a3)" onclick="start('animals')"><i>🐰</i>قلّد الحيوانات<small>اقفز، افرد جناحيك، اجلس، تمايل</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#6bdc38,#1fa843)" onclick="start('hedge')"><i>🦔</i>اصطد القنافذ<small>المس القنافذ التي تمرّ بيدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ffd23f,#38ef7d)" onclick="start('pads')"><i>👣</i>ادعس الدوائر<small>ادعس الدائرة المضيئة بقدمك</small></button>
     <button class="card" style="background:linear-gradient(145deg,#2fd27a,#0f8a5a)" onclick="start('math')"><i>🧮</i>غابة الأرقام<small>أجب عن المسألة بحركة يدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#a58bff,#6a3fd8)" onclick="start('letters')"><i>🔤</i>الكرات السحرية<small>اختر الحرف الصحيح بيدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#59d0ff,#2f7bff)" onclick="start('dragon')"><i>🐉</i>طيران التنين<small>حرّك جسمك لتجمع الكرز</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#ff8a5c,#ff4f7b)" onclick="start('dance')"><i>💃</i>ارقص مع الحيوانات<small>كلما تحركت أكثر رقص أكثر</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#4fb7ff,#4a63ff)" onclick="start('copy')"><i>🧒</i>قلّد الحركة<small>أعلى، أسفل، يمين، يسار</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#47e0a0,#12a58c)" onclick="start('color')"><i>🎨</i>أشر إلى اللون<small>أشر إلى الفقاعة الملونة</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#ffd23f,#ff9a2e)" onclick="start('balloons')"><i>🎈</i>فرقع البالونات<small>المس البالون بيدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#8fd3ff,#5b8cff)" onclick="start('freeze')"><i>🧊</i>ارقص وتجمّد<small>تجمّد عندما تتوقف الموسيقى</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#9b6bff,#5726d9)" onclick="start('letters')"><i>🔤</i>الكرات السحرية<small>اختر الحرف الصحيح بيدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#38bdf8,#0284c7)" onclick="start('dragon')"><i>🐉</i>طيران التنين<small>حرّك جسمك لتجمع الكرز</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ff6b8b,#ff2a5f)" onclick="start('dance')"><i>💃</i>ارقص مع الحيوانات<small>كلما تحركت أكثر رقص أكثر</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#38bdf8,#4f46e5)" onclick="start('copy')"><i>🧒</i>قلّد الحركة<small>أعلى، أسفل، يمين، يسار</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#34d399,#059669)" onclick="start('color')"><i>🎨</i>أشر إلى اللون<small>أشر إلى الفقاعة الملونة</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#fbbf24,#f59e0b)" onclick="start('balloons')"><i>🎈</i>فرقع البالونات<small>المس البالون بيدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#60a5fa,#2563eb)" onclick="start('freeze')"><i>🧊</i>ارقص وتجمّد<small>تجمّد عندما تتوقف الموسيقى</small></button>
   </div>
-  <button class="card" style="display:block;width:100%;max-width:520px;margin:14px auto 0;background:linear-gradient(145deg,#ff7aa2,#c84bd8)" onclick="studio(1)"><i>🎙️</i>استوديو الصوت<small>سجّل صوت طفل أو أم أو أب لكل كلمات اللعبة بدل الصوت الآلي</small></button>
+  <button class="card" style="display:block;width:100%;max-width:520px;margin:12px auto 0;background:linear-gradient(145deg,#ff528f,#b520d0)" onclick="studio(1)"><i>🎙️</i>استوديو الصوت<small>سجّل صوت طفل أو أم أو أب لكل كلمات اللعبة بدل الصوت الآلي</small></button>
   <div id="err"></div>
   <p class="tip">ضع الهاتف على حامل ثابت وبشكل أفقي أمام الأطفال بمسافة 2 إلى 3 أمتار، مع إضاءة جيدة. زر 🔄 داخل اللعبة يبدّل بين الكاميرات، ومنها الكاميرا الواسعة جدًا إن وُجدت، وشغّل صوت الهاتف. الصورة لا تُرسل لأي مكان. يُنصح بإشراف شخص بالغ.</p>
-  <p class="tip">💡 للإضاءة الضعيفة: اترك مصباحًا خافتًا يضيء الأطفال (لا يواجه الكاميرا)، وتجنّب النافذة خلفهم، وفضّل ملابس ملونة. يرفع التطبيق الحساسية والسطوع تلقائيًا ويظهر 🌙 عند الإضاءة الضعيفة.</p>
 </section>
-
 <div id="hud" hidden>
-  <div class="bar glass">
-    <button class="ib" onclick="home()">⬅ رجوع</button>
-    <b id="ttl"></b>
-    <span id="tm" style="font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8)">30:00</span>
-    <span><button class="ib" onclick="viewMode()">📐</button><button class="ib" onclick="flip()">🔄</button></span>
-  </div>
-  <div id="pr"></div>
+  <div class="bar glass"><button class="ib" onclick="home()">⬅ رجوع</button><b id="ttl"></b><div id="st-pill"><span id="st">⭐ 0</span></div><span id="tm" style="font-size:13px;opacity:.9">30:00</span><span><button class="ib" onclick="viewMode()">📐</button><button class="ib" onclick="flip()">🔄</button></span></div>
+  <div id="pr" class="glass"></div>
   <div id="mt"><i></i></div>
 </div>
-
-<!-- شريط الكبسولة المضيئة المستوحى من الصور -->
-<div id="score-capsule" hidden>
-  <i>⭐</i>
-  <span id="st">0</span>
-</div>
-
 <div id="bn"></div>
-
 <div id="studio" hidden><div class="sbox glass">
   <div class="srow"><b>🎙️ استوديو الصوت</b><button class="ib" onclick="studio(0)">✖ إغلاق</button></div>
   <div id="sn"></div><div id="stx"></div><div id="sst"></div>
   <div class="srow"><button id="srec" class="sb" onclick="srec()">🎙️ سجّل</button><button class="sb" onclick="splay()">▶ استمع</button></div>
   <div class="srow"><button class="sb" onclick="snav(-1)">⏮ السابق</button><button class="sb" onclick="snav(1)">⏭ التالي</button></div>
-  <button class="sb" style="background:#444" onclick="sdel()">🗑 حذف تسجيل هذه الجملة</button>
-  <p style="font-size:13px;opacity:.9;margin:10px 0 0;line-height:1.4">اقرأ الجملة بصوت طفل واضح وطبيعي في مكان هادئ. بعد الإيقاف ينتقل تلقائيًا للجملة التالية. الجمل غير المسجّلة تُقرأ بالصوت الآلي.</p>
+  <button class="sb" style="background:#555" onclick="sdel()">🗑 حذف تسجيل هذه الجملة</button>
+  <p style="font-size:13px;opacity:.85;margin:8px 0 0">اقرأ الجملة بصوت طفل واضح وطبيعي في مكان هادئ. بعد الإيقاف ينتقل تلقائيًا للجملة التالية. الجمل غير المسجّلة تُقرأ بالصوت الآلي.</p>
 </div></div>
-
 <div id="end" hidden><h2>⏰ انتهت 30 دقيقة من اللعب</h2><p id="ep"></p><button onclick="extend()">▶ أكمل 30 دقيقة أخرى</button><button onclick="home()">🏠 اختر لعبة أخرى</button></div>
-
 <script>
 const $=i=>document.getElementById(i);
 const cvs=$('c'),g=cvs.getContext('2d'),v=$('v'),an=document.createElement('canvas'),ag=an.getContext('2d',{willReadFrequently:true});
 let pm=0,avgB=128,low=false,mode=0,fill=false,SW=0,SH=0,PX=0,PY=0,vk="",camIdx=0,cams=[{f:"user",n:"الكاميرا الأمامية"},{f:"environment",n:"الكاميرا الخلفية"}],W=0,H=0,AW=40,AH=80,age=3,goal=5,game='',run=false,stars=0,facing='user',stream=null,ac=null,music=false,endT=0,last=0,T=0,S={};
 let cxm=.5,prevL=null,hasPrev=false,mot=null,frame=null,sm=0,lv=0,P=[],lastFail=0;
-
 const COL=[['الأحمر','#ff4d5e',h=>h<14||h>346],['الأصفر','#ffd23f',h=>h>44&&h<68],['الأخضر','#38c172',h=>h>85&&h<160],['الأزرق','#3d8bff',h=>h>195&&h<250],['البرتقالي','#ff9a2e',h=>h>=18&&h<=38]];
 const MOV=[['ارفع يديك للأعلى','⬆️','top'],['انزل للأسفل','⬇️','bot'],['تحرّك ناحية اليسار','⬅️','left'],['تحرّك ناحية اليمين','➡️','right'],['اقفز عاليًا','🦘','all']];
-const ANI=['🦊','🐻','🦁','🐼','🐵','🐶','🦄','🐯','🐸','🐰'];
-const OKW=['Super!', 'Perfekt!', 'Hüpfe!', 'أحسنت', 'برافو يا بطل', 'ممتاز', 'رائع جداً'];
+const ANI=['🐻','🦁','🐼','🐵','🐶','🦄','🐯','🐸','🐰','🦊'];
+const OKW=['أحسنت','أحسنت يا بطل','برافو','ممتاز','مثالي','رائع'];
 const TT={dance:'💃 الرقص',copy:'🧒 قلّد الحركة',color:'🎨 أشر إلى اللون',balloons:'🎈 البالونات',freeze:'🧊 تجمّد',math:'🧮 غابة الأرقام',letters:'🔤 الكرات السحرية',dragon:'🐉 طيران التنين',fruit:'🍊 قطف الثمار',rocks:'💎 حطّم الصخور',animals:'🐰 قلّد الحيوانات',hedge:'🦔 القنافذ',pads:'👣 الدوائر'};
 const P4={top:[.5,.25],bot:[.5,.8],left:[.17,.52],right:[.83,.52]};
-
 const rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.random()*a.length|0];
-
 function fit(){const va=v.videoWidth&&v.videoHeight?v.videoWidth/v.videoHeight:4/3;if(fill){W=SW;H=SH}else if(SW/SH>va){H=SH;W=SH*va}else{W=SW;H=SW/va}PX=(SW-W)/2;PY=(SH-H)/2;AH=Math.round(AW*H/W);an.width=AW;an.height=AH;prevL=null;mot=null}
 function resize(){const d=Math.min(devicePixelRatio||1,2);SW=innerWidth;SH=innerHeight;cvs.width=SW*d;cvs.height=SH*d;g.setTransform(d,0,0,d,0,0);fit()}
 addEventListener('resize',resize);resize();
-
 function setAge(a){age=a;goal=a==3?5:8;$('a3').className=a==3?'on':'';$('a5').className=a==5?'on':''}
-
 const SIL='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
 const AEL=new Audio();AEL.preload='auto';
 let VB={},VM={},VQ=[],vbusy=false,vgen=0;
-
 function norm(t){return String(t).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu,'').replace(/\s+/g,' ').trim()}
 function vstop(){vgen++;VQ=[];vbusy=false;try{AEL.onended=null;AEL.pause()}catch(e){}try{speechSynthesis.cancel()}catch(e){}}
 function say(t,c){t=norm(t);if(!t)return;if(c)vstop();VQ.push(t);if(!vbusy){vbusy=true;vnext()}}
 function vnext(){const t=VQ.shift();if(!t){vbusy=false;return}const G=vgen,nx=()=>{if(G==vgen)vnext()},b=VB[t],m=VM[t];
  if(b||m){AEL.onended=nx;AEL.onerror=()=>{if(G==vgen)tts(t,nx)};AEL.src=b?URL.createObjectURL(b):'voice/'+m;AEL.play().catch(()=>{if(G==vgen)tts(t,nx)})}else tts(t,nx)}
 function tts(t,nx){try{if(!window.speechSynthesis)return nx();const u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';const vs=speechSynthesis.getVoices().filter(x=>x.lang.replace('_','-').toLowerCase().indexOf('ar')==0);u.voice=vs.find(x=>/laila|mariam|zeina|sara|female/i.test(x.name))||vs[0]||null;u.pitch=1.5;u.rate=.85;u.onend=nx;u.onerror=nx;speechSynthesis.speak(u)}catch(e){nx()}}
-
 const DBP=new Promise(r=>{try{const q=indexedDB.open('kidsvoice',1);q.onupgradeneeded=()=>q.result.createObjectStore('v');q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)}catch(e){r(null)}});
 const dbPut=(k,v)=>DBP.then(d=>d&&new Promise(r=>{const x=d.transaction('v','readwrite');x.objectStore('v').put(v,k);x.oncomplete=r;x.onerror=r}));
 const dbDel=k=>DBP.then(d=>d&&new Promise(r=>{const x=d.transaction('v','readwrite');x.objectStore('v').delete(k);x.oncomplete=r;x.onerror=r}));
 DBP.then(d=>{if(!d)return;const c=d.transaction('v').objectStore('v').openCursor();c.onsuccess=e=>{const x=e.target.result;if(x){VB[x.key]=x.value;x.continue()}}});
 fetch('voice/manifest.json').then(r=>r.json()).then(m=>{VM=m}).catch(()=>{});
-
 function beep(f,d,ty){if(!ac)return;const o=ac.createOscillator(),k=ac.createGain();o.type=ty||'triangle';o.frequency.value=f;k.gain.setValueAtTime(.12,ac.currentTime);k.gain.exponentialRampToValueAtTime(.001,ac.currentTime+(d||.15));o.connect(k);k.connect(ac.destination);o.start();o.stop(ac.currentTime+(d||.15))}
 const NOTES=[523,587,659,784,880,784,659,587];let ni=0;
 setInterval(()=>{if(music&&run)beep(NOTES[ni++%8],.2,'sine')},270);
-
-function banner(t){const b=$('bn');b.textContent=t;b.className='on';setTimeout(()=>b.className='',1100)}
+function banner(t){const b=$('bn');b.textContent=t;b.className='on';setTimeout(()=>b.className='',1000)}
 function prompt_(t,s){$('pr').textContent=t;if(s)say(t)}
-
 function burst(x,y,c,n){
-  for(let i=0;i<(n||25);i++){
-    const a=Math.random()*6.28,s=2.5+Math.random()*6;
-    P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-2.5,l:1,c:c||pick(['#ffd23f','#ff5fa2','#00ff88','#00d2ff','#ffea00']),r:4+Math.random()*6,sparkle:Math.random()>.4})
-  }
+  const txts=['ممتاز!','رائع!','Perfect!','Super!'];
+  emo(pick(txts),x,y-20,Math.min(W,H)*.08);
+  for(let i=0;i<(n||20);i++){const a=Math.random()*6.28,s=2+Math.random()*6;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-2,l:1,c:c||pick(['#ffd23f','#ff5fa2','#46e0a0','#4fb7ff']),r:4+Math.random()*6})}
 }
-
-function ok(w){
-  stars++;$('st').textContent=stars;
-  [660,880,1175].forEach((f,i)=>setTimeout(()=>beep(f),i*100));
-  const word = pick(['Super! ✨','Perfekt! 🌟','Hüpfe! 🎉','ممتاز! 👏']);
-  banner(word);
-  say(w||pick(OKW),true);
-  S.t0=Date.now();
-  if(stars>=goal)finish();else nextRound()
-}
-
+function ok(w){stars++;$('st').textContent='⭐ '+stars;[660,880,1175].forEach((f,i)=>setTimeout(()=>beep(f),i*100));banner(pick(['أحسنت! 🌟','برافو! 🎉','رائع! 👏']));say(w||pick(OKW),true);S.t0=Date.now();if(stars>=goal)finish();else nextRound()}
 function fail(){const n=Date.now();if(n-lastFail<2500)return;lastFail=n;banner('حاول مرة أخرى 💪');beep(220,.3,'sawtooth');say('حاول مرة أخرى',true)}
-function finish(){run=false;music=false;$('end').hidden=false;$('score-capsule').hidden=true;$('ep').textContent='جمعت '+stars+' نجوم ⭐';say('أحسنت يا بطل! لقد جمعت كل النجوم. إلى اللقاء، وأراك قريبًا')}
-
+function finish(){run=false;music=false;$('end').hidden=false;$('ep').textContent='جمعت '+stars+' نجوم ⭐';say('أحسنت يا بطل! لقد جمعت كل النجوم. إلى اللقاء، وأراك قريبًا')}
 async function addWide(){try{const ds=await navigator.mediaDevices.enumerateDevices();const u=ds.find(d=>d.kind=='videoinput'&&/ultra/i.test(d.label)&&/back|rear/i.test(d.label));if(u&&!cams.some(c=>c.id))cams.push({id:u.deviceId,n:'الكاميرا الواسعة جدًا'})}catch(e){}}
 async function cam(){if(stream)stream.getTracks().forEach(t=>t.stop());const c=cams[camIdx],sz=mode==1?{width:{ideal:640},height:{ideal:480}}:{width:{ideal:1280},height:{ideal:720}};
  stream=await navigator.mediaDevices.getUserMedia({video:c.id?Object.assign({deviceId:{exact:c.id}},sz):Object.assign({facingMode:c.f},sz),audio:false});v.srcObject=stream;await v.play();prevL=null;hasPrev=false;fit();await addWide()}
 async function flip(){camIdx=(camIdx+1)%cams.length;try{await cam();banner('📷');$('pr').textContent=cams[camIdx].n}catch(e){camIdx=0;try{await cam()}catch(e2){}}}
-
-async function start(k){game=k;clearTimeout(endT);$('end').hidden=true;
- try{AEL.src=SIL;AEL.play().catch(()=>{});if(window.speechSynthesis)speechSynthesis.speak(new SpeechSynthesisUtterance(' '));ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state=='suspended')ac.resume();await cam()}catch(e){$('err').textContent='لم تفتح الكاميرا. اسمح بالكاميرا لموقع Safari، وافتح الصفحة عبر رابط https.';return}
- $('menu').hidden=true;$('hud').hidden=false;$('score-capsule').hidden=false;$('ttl').textContent=TT[k];stars=0;goal=1e9;$('st').textContent='0';S={t0:Date.now(),pr:0,an:0,hold:0,b:[],sp:0,cnt:0,ph:'move',sc:0,bad:0,tgt:-1,end:Date.now()+18e5,over:0};run=true;
+async function start(k){game=k;clearTimeout(endT);$('end').hidden=true;$('err').textContent='';
+ try{AEL.src=SIL;AEL.play().catch(()=>{});if(window.speechSynthesis)speechSynthesis.speak(new SpeechSynthesisUtterance(' '));ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state=='suspended')ac.resume();await cam()}catch(e){$('err').textContent='لم تفتح الكاميرا. اسمح بالكاميرا لموقعك أو افتح الصفحة عبر رابط HTTPS آمن.';return}
+ $('menu').hidden=true;$('hud').hidden=false;$('ttl').textContent=TT[k];stars=0;goal=1e9;$('st').textContent='⭐ 0';S={t0:Date.now(),pr:0,an:0,hold:0,b:[],sp:0,cnt:0,ph:'move',sc:0,bad:0,tgt:-1,end:Date.now()+18e5,over:0};run=true;
  const hi=HI[k];
  say('مرحبًا يا أبطال! '+hi,true);
  if(k=='dance'){prompt_('ارقص مع الحيوان! 💃');music=true}
  else if(k=='freeze'){S.ph='move';S.t0=Date.now();music=true;prompt_('ارقص مع الموسيقى! 🎵')}
  else if(k=='balloons'){S.tgt=age==5?rnd(0,5)|0:-1;balPrompt()}
  else nextRound()}
-
-function home(){clearInterval(tuI);run=false;music=false;clearTimeout(endT);vstop();$('hud').hidden=true;$('score-capsule').hidden=true;$('end').hidden=true;$('menu').hidden=false;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;frame=null}
-function balPrompt(){if(S.tgt<0)prompt_('فرقع البالونات بيدك! 🎈',true);else prompt_('فرقع البالونات '+COL[S.tgt][0],true)}
-
-function nextRound(){S.hold=0;S.t0=Date.now();
- if(game=='copy'){S.m=pick(age==3?[MOV[0],MOV[2],MOV[3],MOV[4]]:MOV);prompt_(S.m[0],true)}
- else if(game=='color'){const c=[...COL].sort(()=>Math.random()-.5).slice(0,4),d=['top','bot','left','right'];S.cols={};d.forEach((k,i)=>S.cols[k]=c[i]);S.tgt=pick(d);S.dw={top:0,bot:0,left:0,right:0};S.oh=0;prompt_('أين اللون '+S.cols[S.tgt][0]+'؟ أشر إليه',true)}
- else if(game=='balloons'&&age==5&&S.cnt%3==0){S.tgt=rnd(0,5)|0;balPrompt()}
- else if(game=='math')newMath();else if(game=='letters')newLetter();else if(game=='dragon'&&!S.it){S.it=[];S.dx=.5;S.n=0;prompt_('حرّك جسمك يمينًا ويسارًا لتجمع الكرز! 🍒',true)}
- else if(game=='fruit'&&!S.fr)initFruit();else if(game=='rocks'&&!S.rk)initRocks();else if(game=='pads')newPad();else if(game=='animals')newAni();else if(game=='hedge'&&!S.hg){S.hg=[];prompt_('المس القنافذ بيدك! 🦔',true)}}
-
-function analyze(){if(v.readyState<2||!v.videoWidth)return;
- const vw=v.videoWidth,vh=v.videoHeight;if(vw+'x'+vh!==vk){vk=vw+'x'+vh;fit();return}const s=Math.max(AW/vw,AH/vh),dw=vw*s,dh=vh*s;
- ag.save();ag.translate(AW,0);ag.scale(-1,1);ag.drawImage(v,(AW-dw)/2,(AH-dh)/2,dw,dh);ag.restore();
- frame=ag.getImageData(0,0,AW,AH).data;const n=AW*AH;
- if(!prevL||prevL.length!=n){prevL=new Int16Array(n);hasPrev=false}if(!mot||mot.length!=n)mot=new Uint8Array(n);
- let tot=0;for(let i=0;i<n;i++){const o=i*4;tot+=frame[o]+frame[o+1]+frame[o+2]}
- const mean=tot/n,adj=hasPrev?mean-pm:0,TH=Math.max(low?32:24,Math.min(90,mean*.26));pm=mean;avgB=avgB*.8+mean/3*.2;low=avgB<75;
- let c=0,sx=0,cL=0,lx=0,ly=0,cR=0,rx=0,ry=0;for(let i=0;i<n;i++){const o=i*4,L=frame[o]+frame[o+1]+frame[o+2];const m=hasPrev&&Math.abs(L-prevL[i]-adj)>TH?1:0;mot[i]=m;c+=m;if(m){const xx=i%AW;sx+=xx;if(xx<AW/2){cL++;lx+=xx;ly+=i/AW|0}else{cR++;rx+=xx;ry+=i/AW|0}}prevL[i]=L}
- [[cL,lx,ly,0],[cR,rx,ry,1]].forEach(a=>{const h=HR[a[3]];if(a[0]>5){h.x+=(a[1]/a[0]/AW-h.x)*.5;h.y+=(a[2]/a[0]/AH-h.y)*.5;h.a=1}else h.a*=.8});hasPrev=true;if(c>n*.012)cxm=cxm*.7+(sx/c/AW)*.3;sm=sm*.6+(c/n)*.4;lv=Math.min(1,sm/.2)}
-
-function fr(x0,y0,x1,y1){if(!mot)return 0;const a=Math.max(0,x0*AW|0),b=Math.max(0,y0*AH|0),c=Math.min(AW,Math.ceil(x1*AW)),d=Math.min(AH,Math.ceil(y1*AH));let k=0,t=0;for(let y=b;y<d;y++)for(let x=a;x<c;x++){k+=mot[y*AW+x];t++}return t?k/t:0}
-function hm(r,gg,b,fn){const m=Math.max(r,gg,b),n=Math.min(r,gg,b),d=m-n;if(m<90||d/m<.5)return false;const h=m==r?((gg-b)/d+6)%6:m==gg?(b-r)/d+2:(r-gg)/d+4;return fn(h*60)}
-function cf(x0,y0,x1,y1,fn){if(!frame)return 0;const G=Math.min(3,Math.max(1,110/Math.max(20,avgB)));const a=x0*AW|0,b=y0*AH|0,c=Math.ceil(x1*AW),d=Math.ceil(y1*AH);let k=0,t=0;for(let y=b;y<d;y++)for(let x=a;x<c;x++){const o=(y*AW+x)*4;if(hm(Math.min(255,frame[o]*G),Math.min(255,frame[o+1]*G),Math.min(255,frame[o+2]*G),fn))k++;t++}return t?k/t:0}
-
-function tick(){if(!run)return;const rem=Math.max(0,S.end-Date.now()),p2=n=>(n<10?'0':'')+n;$('tm').textContent=p2(rem/60000|0)+':'+p2((rem/1000|0)%60);if(rem<=0&&!S.over)timeUp();$('ttl').textContent=TT[game]+(low?' 🌙':'');$('mt').firstChild.style.width=lv*100+'%';const k=game,now=Date.now();
- if(k=='dance'){if(sm>(age==3?.03:.06))S.pr+=lv;const need=age==3?18:28;if(S.pr>=need){S.pr=0;S.an++;burst(W/2,H/2);ok()}else if(now-S.t0>14000){S.t0=now;say('تحرّك أكثر! هيا نرقص')}}
- else if(k=='copy'){if(!S.m)return;const m=S.m[2],f=m=='top'?fr(0,0,1,.38):m=='bot'?fr(0,.62,1,1):m=='left'?fr(0,0,.4,1):m=='right'?fr(.6,0,1,1):sm,th=age==3?.07:.1;
-  if(f>th)S.hold++;else S.hold=Math.max(0,S.hold-1);const need=age==3?7:6;S.pg=S.hold/need;
-  if(S.hold>=need){burst(W*.5,H*.5);ok()}else if(now-S.t0>(age==3?12000:9000)){fail();nextRound()}}
- else if(k=='color'){if(!S.cols)return;let hit=null;
-  for(const d in P4){const [x,y]=P4[d],f=fr(x-.17,y-.1,x+.17,y+.1);if(f>.16)S.dw[d]++;else S.dw[d]=Math.max(0,S.dw[d]-1);if(S.dw[d]>=(age==3?6:8)&&!hit)hit=d}
-  const tc=S.cols[S.tgt];if(cf(.2,.3,.8,.7,tc[2])>.1)S.oh++;else S.oh=0;if(S.oh>=8)hit=S.tgt;
-  if(hit){if(hit==S.tgt){const p=P4[hit];burst(p[0]*W,p[1]*H,S.cols[hit][1],30);ok()}else{S.dw[hit]=0;fail()}}
-  else if(now-S.t0>25000){fail();nextRound()}}
- else if(k=='balloons'){for(const b of S.b){if(b.dead)continue;const rw=b.r/W*1.2,rh=b.r/H*1.3;if(fr(b.x-rw,b.y-rh,b.x+rw,b.y+rh)>.2){b.dead=1;burst(b.x*W,b.y*H,COL[b.c][1],22);beep(900,.1,'square');
-   if(S.tgt<0||b.c==S.tgt){S.cnt++;ok()}else fail()}}}
- else if(k=='fruit'){if(!S.fr)return;const R=Math.min(W,H)*.1;for(const f of S.fr){if(f.g>0){f.g--;if(f.g==0)respawn(f);continue}
-  if(fr(f.x-R/W,f.y-R/H,f.x+R/W,f.y+R/H)>.15)f.dw++;else f.dw=Math.max(0,f.dw-1);
-  if(f.dw>=(age==3?4:5)){f.dw=0;if(S.tgt<0||f.c==S.tgt){f.g=14;burst(f.x*W,f.y*H,COL[f.c][1],26);S.jmp=now;S.cnt++;ok();if(run&&S.tgt>=0&&S.cnt%3==0){S.tgt=rnd(0,5)|0;S.fr[rnd(0,5)|0].c=S.tgt;fruitPrompt()}break}else{f.sh=12;fail()}}}}
- else if(k=='rocks'){if(!S.rk)return;const R0=Math.min(W,H)*.11;for(const r of S.rk){if(r.cd>0){r.cd--;continue}const R=R0*r.s;
-  if(fr(r.x-R/W,r.y-R/H,r.x+R/W,r.y+R/H)>.2)r.dw++;else r.dw=Math.max(0,r.dw-1);
-  if(r.dw>=3){r.dw=0;r.hp--;r.sh=10;r.cd=6;beep(200,.12,'square');burst(r.x*W,r.y*H,'#00ffff',12);
-   if(r.hp<=0){burst(r.x*W,r.y*H,'#ff4d6d',30);S.rk=S.rk.filter(q=>q!==r);addRock();ok();break}}}}
- else if(k=='pads'){if(S.pd==null)return;const p=PD[S.pd];if(fr(p[0]-.14,.7,p[0]+.14,1)>.17)S.dw++;else S.dw=Math.max(0,S.dw-1);
-  if(S.dw>=4){burst(p[0]*W,p[1]*H,'#7dff9a',26);ok()}else if(now-S.t0>25000){fail();S.t0=now}}
- else if(k=='hedge'){if(!S.hg)return;const R=Math.min(W,H)*.1;for(const h of S.hg){const rw=R/W*1.3,rh=R/H*1.3;if(fr(h.x-rw,h.y-rh,h.x+rw,h.y+rh)>.2){burst(h.x*W,h.y*H,'#ffb02e',22);h.x=9;ok();break}}}
- else if(k=='animals'){const m=S.cur;if(!m)return;const th=age==3?.07:.1;let f=0;
-  if(m.k=='hop')f=sm>th*.6?1:0;else if(m.k=='wings')f=(fr(0,0,.3,.75)>th&&fr(.7,0,1,.75)>th)?1:0;else if(m.k=='bot')f=fr(0,.62,1,1)>th?1:0;
-  else{if(fr(0,0,.4,1)>th)S.sl=1;f=(S.sl&&fr(.6,0,1,1)>th)?1:0}
-  const need=m.k=='sway'?1:6;if(f)S.hold++;else if(m.k!='sway')S.hold=Math.max(0,S.hold-1);S.pg=S.hold/need;
-  if(S.hold>=need){burst(W*.2,H*.65);ok()}else if(now-S.t0>(age==3?14000:10000)){fail();S.sl=0;S.hold=0;S.t0=now}}
- else if(k=='math'||k=='letters'){if(!S.orbs)return;for(const o of S.orbs){const f=fr(o.x-.15,o.y-.09,o.x+.15,o.y+.09);if(f>.16)o.dw++;else o.dw=Math.max(0,o.dw-1);if(o.dw>=(age==3?5:6)){o.dw=0;if(o.ok){burst(o.x*W,o.y*H,'#ffd23f',30);ok();break}else{o.sh=14;fail()}}}if(now-S.t0>30000){fail();nextRound()}}
- else if(k=='freeze'){const el=(now-S.t0)/1000;
-  if(S.ph=='move'){S.sc+=lv;if(el>(age==3?6:8)){if(S.sc<7){S.t0=now;S.sc=0;say('تحرّك أكثر!')}else{S.ph='freeze';S.t0=now;S.bad=0;music=false;prompt_('🧊 تجمّد! لا تتحرك',true);banner('🧊 تجمّد!')}}}
-  else{if(el>1.4&&sm>.045)S.bad++;if(el>(age==3?4:5)){S.ph='move';S.t0=now;S.sc=0;music=true;if(S.bad<=2){ok()}else fail();prompt_('ارقص مع الموسيقى! 🎵')}}}}
-
-/* ---------- الرسم والجرافيك المحدث بالكامل ليطابق الصور ---------- */
-function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
-function ln(a,b,c,d,w,col){g.strokeStyle=col;g.lineWidth=w;g.lineCap='round';g.beginPath();g.moveTo(a,b);g.lineTo(c,d);g.stroke()}
-function emo(t,x,y,s,r){g.save();g.translate(x,y);g.rotate(r||0);g.font=s+'px system-ui,"Apple Color Emoji",sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(t,0,0);g.restore()}
-
-function drawCam(w){
- const tn=WD[w]||WD.magic,bg=g.createLinearGradient(0,0,0,SH);bg.addColorStop(0,'#100526');bg.addColorStop(1,'#220d4f');g.fillStyle=bg;g.fillRect(0,0,SW,SH);
- if(frame&&v.videoWidth){const vw=v.videoWidth,vh=v.videoHeight,sc=Math.max(W/vw,H/vh),dw=vw*sc,dh=vh*sc;g.save();g.beginPath();g.rect(PX,PY,W,H);g.clip();g.translate(PX+W,PY);g.scale(-1,1);g.drawImage(v,(W-dw)/2,(H-dh)/2,dw,dh);if(avgB<95){g.globalCompositeOperation='lighter';g.globalAlpha=Math.min(.9,(95-avgB)/50);g.drawImage(v,(W-dw)/2,(H-dh)/2,dw,dh)}g.restore()}else{g.fillStyle='#1a0b36';g.fillRect(PX,PY,W,H)}
- const gr=g.createLinearGradient(0,PY,0,PY+H);gr.addColorStop(0,tn[0]);gr.addColorStop(.5,tn[1]);gr.addColorStop(1,tn[0]);g.globalAlpha=avgB<75?.35:0.85;g.fillStyle=gr;g.fillRect(PX,PY,W,H);g.globalAlpha=1;
- if(PX>2||PY>2){g.strokeStyle='rgba(255,255,255,.4)';g.lineWidth=4;g.strokeRect(PX,PY,W,H)}
-}
-
-function arm(sx,sy,a){g.save();g.translate(sx,sy);g.rotate(a*Math.PI/180);ln(0,0,0,64,16,'#ffaa70');g.restore()}
-
-/* الكلب/الثعلب اللطيف المستوحى تماماً من صورة 1 وصورة 3 */
-function foxDogCharacter(x,y,s,p){
- g.save();g.translate(x,y);g.scale(s,s);g.translate(-100,-135);g.translate(p.tx,p.ty);g.translate(100,245);g.rotate(p.rot*Math.PI/180);g.scale(1,p.sy);g.translate(-100,-245);
- 
- // الأرجل
- ln(86,165,82,232,19,#2b6ee0);ln(114,165,118,232,19,#2b6ee0);
- g.fillStyle='#ffd9b3';[78,122].forEach(cx=>{g.beginPath();g.ellipse(cx,240,16,8,0,0,6.3);g.fill()});
- 
- // الأذرع
- arm(68,108,p.aL);arm(132,108,p.aR);
- 
- // القميص الأحمر/البرتقالي المميز بالصورة 1
- const gr=g.createLinearGradient(0,92,0,176);gr.addColorStop(0,'#ff5f38');gr.addColorStop(1,'#e03212');g.fillStyle=gr;rr(60,92,80,80,24);g.fill();
- // الياقة البيضاء
- g.fillStyle='#ffffff';g.beginPath();g.arc(100,92,14,0,Math.PI);g.fill();
- 
- // الرأس البرتقالي اللطيف
- g.fillStyle='#ff6f28';g.beginPath();g.arc(100,60,42,0,6.3);g.fill();
- // الخدين الزاهيين
- g.fillStyle='#ffc9a8';g.beginPath();g.arc(100,72,28,0,6.3);g.fill();
- 
- // الأذنان الكبيرتان
- [-28,28].forEach(dx=>{
-   g.fillStyle='#ff6f28';g.beginPath();g.ellipse(100+dx,20,14,26,dx>0?.3:-.3,0,6.3);g.fill();
-   g.fillStyle='#ff9ebb';g.beginPath();g.ellipse(100+dx,22,8,16,dx>0?.3:-.3,0,6.3);g.fill();
- });
- 
- // العيون اللامعة
- g.fillStyle='#ffffff';[84,116].forEach(cx=>{g.beginPath();g.arc(cx,56,10,0,6.3);g.fill()});
- g.fillStyle='#0077ff';[84,116].forEach(cx=>{g.beginPath();g.arc(cx,56,5,0,6.3);g.fill()});
- g.fillStyle='#ffffff';[86,118].forEach(cx=>{g.beginPath();g.arc(cx,54,2,0,6.3);g.fill()});
- 
- // الأنف والابتسامة
- g.fillStyle='#222';g.beginPath();g.arc(100,68,5,0,6.3);g.fill();
- g.strokeStyle='#222';g.lineWidth=3.5;g.lineCap='round';g.beginPath();g.moveTo(92,76);g.quadraticCurveTo(100,85,108,76);g.stroke();
- 
- g.restore();
-}
-
-function pose(k,t){const p=(Math.sin(t/260)+1)/2,o={tx:0,ty:0,sy:1,rot:0,aL:10,aR:-10};
- if(k=='top'){o.aL=150+25*p;o.aR=-o.aL}else if(k=='bot'){o.sy=1-.3*p;o.aL=40;o.aR=-40}
- else if(k=='left'){o.tx=-50*p;o.rot=-8*p;o.aL=o.aR=90}else if(k=='right'){o.tx=50*p;o.rot=8*p;o.aL=o.aR=-90}
- else{o.ty=-55*Math.abs(Math.sin(t/260));o.aL=140;o.aR=-140}return o}
-
-/* تصميم الفقاعة اللامعة وحلقات الطاقة المضيئة المرفقة بالصور */
-function bubble(x,y,r,col,pr,t){
- const pl=1+Math.sin(t/300)*.04;
- g.save();g.shadowColor=col;g.shadowBlur=28;
- const gr=g.createRadialGradient(x-r*.3,y-r*.35,r*.08,x,y,r*pl);
- gr.addColorStop(0,'rgba(255,255,255,.98)');gr.addColorStop(.35,col);gr.addColorStop(1,col);
- g.fillStyle=gr;g.beginPath();g.arc(x,y,r*pl,0,6.3);g.fill();g.restore();
- 
- // الحلقة المضيئة الخارجية المقوّاة
- g.strokeStyle='rgba(255,255,255,.95)';g.lineWidth=5;g.beginPath();g.arc(x,y,r*pl+8,0,6.3);g.globalAlpha=.3;g.stroke();g.globalAlpha=1;
- if(pr>0){g.beginPath();g.arc(x,y,r*pl+8,-1.57,-1.57+6.283*Math.min(1,pr));g.strokeStyle='#ffffff';g.lineWidth=8;g.stroke()}
-}
-
-function balloon(b){const R=b.r,x=b.x*W,y=b.y*H,c=COL[b.c][1];g.save();g.translate(x+Math.sin(b.ph)*10,y);
- ln(0,R*1.2,Math.sin(b.ph*2)*8,R*2.6,2,'rgba(255,255,255,.8)');
- const gr=g.createRadialGradient(-R*.3,-R*.4,R*.1,0,0,R*1.2);gr.addColorStop(0,'rgba(255,255,255,.95)');gr.addColorStop(.25,c);gr.addColorStop(1,c);g.fillStyle=gr;g.shadowColor='rgba(0,0,0,.35)';g.shadowBlur=16;
- g.beginPath();g.ellipse(0,0,R,R*1.2,0,0,6.3);g.fill();g.shadowBlur=0;g.fillStyle=c;g.beginPath();g.moveTo(-6,R*1.18);g.lineTo(6,R*1.18);g.lineTo(0,R*1.38);g.fill();g.restore()}
-
-function glow(d){const gr=d=='top'?g.createLinearGradient(0,0,0,H*.3):d=='bot'?g.createLinearGradient(0,H,0,H*.7):d=='left'?g.createLinearGradient(0,0,W*.35,0):g.createLinearGradient(W,0,W*.65,0);gr.addColorStop(0,'rgba(255,255,255,.55)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,W,H)}
-
-function draw(t){drawCam(WRL[game]);g.save();g.translate(PX,PY);g.beginPath();g.rect(0,0,W,H);g.clip();draw2(t);g.restore()}
-
-function draw2(t){
- const k=game;scenery(WRL[k],t);
- const vg=g.createRadialGradient(W/2,H/2,Math.min(W,H)*.45,W/2,H/2,Math.max(W,H)*.8);
- vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(10,0,35,.5)');g.fillStyle=vg;g.fillRect(0,0,W,H);
- 
- if(k=='dance'){const cx=W/2,cy=H*.5,s=Math.min(W,H)*.5,b=Math.sin(t/180)*lv*30;
-  const gr=g.createRadialGradient(cx,cy,10,cx,cy,s*.8);gr.addColorStop(0,'rgba(255,255,255,.45)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,W,H);
-  g.save();g.shadowColor='rgba(0,0,0,.35)';g.shadowBlur=25;g.shadowOffsetY=12;emo(ANI[S.an%ANI.length],cx,cy+b,s*(.9+lv*.25),Math.sin(t/160)*(.05+lv*.35));g.restore();
-  g.strokeStyle='#ffd23f';g.lineWidth=10;g.lineCap='round';g.beginPath();g.arc(cx,cy,s*.62,-1.57,-1.57+6.283*Math.min(1,S.pr/(age==3?18:28)));g.stroke()}
- else if(k=='copy'&&S.m){const m=S.m[2];glow(m=='bot'?'bot':m=='all'?'':m);
-  const ph=Math.min(W*.44,H*.3),px=W-ph-12,py=H*.2;g.fillStyle='rgba(255,255,255,.22)';rr(px,py,ph,ph,28);g.fill();g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=3;g.stroke();
-  foxDogCharacter(px+ph/2,py+ph/2,ph/300,pose(m,t));emo(S.m[1],px+ph*.2,py+ph*.2,ph*.3);
-  g.strokeStyle='#46e0a0';g.lineWidth=8;g.lineCap='round';g.beginPath();g.arc(40,H-50,26,-1.57,-1.57+6.283*(S.pg||0));g.stroke()}
- else if(k=='color'&&S.cols){const R=Math.min(W,H)*.11;for(const d in P4){const [x,y]=P4[d];bubble(x*W,y*H,R,S.cols[d][1],S.dw[d]/(age==3?6:8),t)}
-  if(S.oh>0){g.strokeStyle='#fff';g.lineWidth=8;g.beginPath();g.arc(W/2,H*.5,R*.9,-1.57,-1.57+6.283*S.oh/8);g.stroke()}
-  g.fillStyle=S.cols[S.tgt][1];g.beginPath();g.arc(W/2,H*.5,R*.5+Math.sin(t/250)*4,0,6.3);g.fill();g.strokeStyle='#fff';g.lineWidth=5;g.stroke()}
- else if(k=='balloons'){const dt=16/1000;S.sp-=dt;if(S.sp<=0){S.sp=age==3?1.1:.8;S.b.push({x:rnd(.12,.88),y:1.12,vy:rnd(.1,.17)*(age==3?.8:1.1),c:S.tgt>=0&&Math.random()<.45?S.tgt:rnd(0,5)|0,r:Math.min(W,H)*.09,ph:rnd(0,6)})}
-  for(const b of S.b){b.y-=b.vy*dt;b.ph+=.03;balloon(b)}S.b=S.b.filter(b=>!b.dead&&b.y>-.2)}
- else if(k=='fruit'){if(!S.fr)return;for(const f of S.fr)if(!(f.g>0))lantern(f,t);
-  const jp=Date.now()-(S.jmp||0)<700;
-  // الجزرات والنباتات اللطيفة بالأسفل (صورة 1 وصورة 5)
-  ['🥕','🥕','🐸','🥕','🥕'].forEach((e,i)=>emo(e,W*(.14+i*.18),H*.92-(jp?Math.abs(Math.sin(t/110+i))*H*.08:0),Math.min(W,H)*(.11)))}
- else if(k=='rocks'){if(!S.rk)return;
-  // الحيوان الأرجواني بالأسفل المستوحى من الصورة 2
-  purpleArmadillo(W*.15,H*.78,Math.min(W,H)*.25,t);
-  for(const r of S.rk)rock(r,t)}
- else if(k=='hedge'){if(!S.hg)return;const dt=.016;S.sp-=dt;if(S.sp<=0){S.sp=age==3?1.3:.95;const d=Math.random()<.5?1:-1;S.hg.push({x:d>0?-.1:1.1,y:pick([.36,.52,.68]),d:d,v:rnd(.1,.16)*(age==3?.85:1.1),ph:rnd(0,6)})}
-  const R=Math.min(W,H)*.1;for(const h of S.hg){h.x+=h.d*h.v*dt;h.ph+=.2;g.save();g.translate(h.x*W,h.y*H+Math.sin(h.ph)*4);if(h.d>0)g.scale(-1,1);emo('🦔',0,0,R*1.5);emo('🌰',0,-R*.95,R*.7);g.restore()}
-  S.hg=S.hg.filter(h=>h.x>-.2&&h.x<1.2)}
- else if(k=='pads'){if(S.pd==null)return;PD.forEach((p,i)=>{const x=p[0]*W,y=p[1]*H,rx=W*.12,ry=H*.06,lit=i==S.pd,c=i==1?'#7dff9a':'#ffd84d';g.save();g.fillStyle=lit?'rgba(255,255,255,.3)':'rgba(255,255,255,.12)';g.strokeStyle=lit?c:'rgba(255,255,255,.5)';g.lineWidth=lit?8:3;if(lit){g.shadowColor=c;g.shadowBlur=28+Math.sin(t/150)*10}g.beginPath();g.ellipse(x,y,rx,ry,0,0,6.3);g.fill();g.stroke();g.restore();
-   if(lit&&S.dw>0){g.strokeStyle='#fff';g.lineWidth=8;g.beginPath();g.ellipse(x,y,rx+8,ry+8,0,-1.57,-1.57+6.283*S.dw/4);g.stroke()}});
-  emo('👣',PD[S.pd][0]*W,PD[S.pd][1]*H-H*.12+Math.sin(t/200)*8,Math.min(W,H)*.1);foxDogCharacter(W*(S.pd==2?.15:.85),H*.6,Math.min(W,H)*.0018,{tx:0,ty:0,sy:1,rot:0,aL:20,aR:-20})}
- else if(k=='animals'){const m=S.cur;if(!m)return;const sz=Math.min(W*.09,H*.11);
-  S.seq.forEach((a,i)=>{const x=W*(.5+(i-1.5)*.15),y=H*.25,cur=i==S.ai;
-   g.fillStyle=cur?'rgba(255,255,255,.45)':'rgba(255,255,255,.18)';rr(x-sz*.85,y-sz*.85,sz*1.7,sz*1.7,20);g.fill();if(cur){g.strokeStyle='#00ff88';g.lineWidth=5+Math.sin(t/150)*2;g.stroke()}
-   g.globalAlpha=i<S.ai?.45:1;emo(a.e,x,y,sz);g.globalAlpha=1;if(i<S.ai)emo('✅',x+sz*.5,y+sz*.5,sz*.5)});
-  const p=Math.sin(t/220);g.save();g.translate(W*.22,H*.68);
-  if(m.k=='hop')g.translate(0,-Math.abs(p)*H*.1);else if(m.k=='wings'){g.scale(1+Math.abs(p)*.35,1);g.rotate(p*.1)}else if(m.k=='bot')g.scale(1.1,1-Math.abs(p)*.3);else{g.translate(p*W*.04,0);g.rotate(p*.3)}
-  emo(m.e,0,0,Math.min(W,H)*.36);g.restore();
-  g.save();g.font='900 '+Math.min(W,H)*.085+'px system-ui,sans-serif';g.textAlign='center';g.lineWidth=7;g.strokeStyle='#004d1a';g.fillStyle='#7dff9a';const wd={hop:'Hüpfe! (اقفز)',wings:'افرد يديك!',bot:'اجلس!',sway:'تمايل!'}[m.k];g.strokeText(wd,W*.22,H*.42);g.fillText(wd,W*.22,H*.42);g.restore();
-  g.strokeStyle='#46e0a0';g.lineWidth=8;g.lineCap='round';g.beginPath();g.arc(W-45,H-50,26,-1.57,-1.57+6.283*(S.pg||0));g.stroke()}
- else if(k=='math'||k=='letters'){if(!S.orbs)return;const q=S.q,hs=Math.min(W*.12,H*.07);
-  if(q.k=='cnt'){for(let i=0;i<q.n;i++)emo('🌟',W*(.5+(i-(q.n-1)/2)*.15),H*.25+Math.sin(t/300+i)*6,hs*1.3)}
-  else if(q.txt){g.save();g.font='900 '+hs*1.6+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.direction='ltr';g.fillStyle='#fff';g.shadowColor='rgba(0,0,0,.6)';g.shadowBlur=12;g.fillText(q.txt,W/2,H*.25);g.restore()}
-  else emo(q.e,W/2,H*.25+Math.sin(t/260)*8,Math.min(W*.2,H*.12));
-  S.orbs.forEach((o,i)=>orb(o,t,['#8e5cff','#ff6fb1','#35c8ff','#ffb02e'][i]));
-  foxDogCharacter(W/2,H*.78,Math.min(W,H)*.0016,{tx:0,ty:0,sy:1,rot:0,aL:40,aR:-40})}
- else if(k=='dragon'){if(!S.it)return;const dt=.016;S.dx+=(cxm-S.dx)*.15;const dxp=S.dx*W,dy=H*.78;S.sp-=dt;
-  if(S.sp<=0){S.sp=age==3?1:.75;S.it.push({x:rnd(.12,.88),y:-.05,k:Math.random()<(age==3?.15:.3)?'m':'c',vy:rnd(.2,.3)})}
-  for(const i of S.it){i.y+=i.vy*dt;const ix=i.x*W,iy=i.y*H;emo(i.k=='c'?'🍒':'👾',ix,iy,Math.min(W,H)*.1);
-   if(!i.d&&Math.abs(ix-dxp)<W*.14&&Math.abs(iy-dy)<H*.07){i.d=1;if(i.k=='c'){S.n++;burst(ix,iy,'#ff4d5e',16);ok(ARW[S.n])}else{burst(ix,iy,'#999',12);fail()}}}
-  S.it=S.it.filter(i=>!i.d&&i.y<1.1);
-  // التنين الأخضر اللطيف المستوحى تماماً من صورة 2
-  greenDragonCharacter(dxp,dy,Math.min(W,H)*.22,t)}
- else if(k=='freeze'){const fz=S.ph=='freeze';if(fz){g.fillStyle='rgba(90,190,255,.38)';g.fillRect(0,0,W,H)}
-  const cx=W/2,cy=H*.5,s=Math.min(W,H)*.4;g.save();g.shadowColor='rgba(0,0,0,.35)';g.shadowBlur=22;emo(fz?'🧊':'🎵',cx,cy+(fz?0:Math.sin(t/150)*20),s*(fz?1:1+lv*.3),fz?0:Math.sin(t/200)*.3);g.restore()}
- hands(t);drawP()}
-
-/* رسم الجسيمات المتلألئة Luminous Sparkles */
-function drawP(){
- for(const p of P){
-  p.x+=p.vx;p.y+=p.vy;p.vy+=.16;p.l-=.022;
-  g.globalAlpha=Math.max(0,p.l);g.fillStyle=p.c;
-  if(p.sparkle){
-    g.save();g.translate(p.x,p.y);g.rotate(p.l*5);
-    g.beginPath();g.moveTo(-p.r,0);g.lineTo(p.r,0);g.moveTo(0,-p.r);g.lineTo(0,p.r);
-    g.strokeStyle=p.c;g.lineWidth=3;g.stroke();g.restore();
-  }else{
-    g.beginPath();g.arc(p.x,p.y,p.r,0,6.3);g.fill()
-  }
- }
- g.globalAlpha=1;P=P.filter(p=>p.l>0)
-}
-
-/* ---------- العوالم والتصاميم المحدثة من الصور ---------- */
-const WRL={dance:'magic',copy:'jungle',color:'ocean',balloons:'sky',freeze:'magic',math:'jungle',letters:'magic',dragon:'sky',fruit:'jungle',rocks:'ocean',animals:'jungle',hedge:'jungle',pads:'magic'};
-const WD={jungle:['rgba(12,60,30,.45)','rgba(0,35,15,.15)'],ocean:['rgba(0,80,160,.45)','rgba(0,40,100,.15)'],magic:['rgba(80,20,130,.5)','rgba(35,10,80,.15)'],sky:['rgba(50,150,240,.4)','rgba(150,210,255,.1)']};
-const ARW=['صفر','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة','عشرة','أحد عشر','اثنا عشر','ثلاثة عشر','أربعة عشر','خمسة عشر','ستة عشر','سبعة عشر','ثمانية عشر','تسعة عشر','عشرون'];
-const ar=n=>String(n);
-const WRD=[['بطة','🦆','ب'],['أسد','🦁','أ'],['تفاحة','🍎','ت'],['جمل','🐫','ج'],['فيل','🐘','ف'],['قطة','🐱','ق'],['سمكة','🐟','س'],['موز','🍌','م'],['نجمة','⭐','ن'],['حصان','🐴','ح']];
-
-const FL=Array.from({length:22},()=>({x:Math.random(),y:Math.random(),p:rnd(0,6),s:rnd(.5,1.5)}));
-const DEC=Array.from({length:12},(_,i)=>({y:i/11,l:rnd(.09,.2),a:rnd(-.5,.5),c:['#1f8a4c','#2fb15f','#157a3d','#52c878'][i%4]}));
-
-/* التنين الأخضر الصغير المستوحى من الصورة 2 */
-function greenDragonCharacter(x,y,s,t){
- g.save();g.translate(x,y);const f=Math.sin(t/120)*.2;
- // الأجنحة الصفراء/الخضراء
- g.fillStyle='#a0eb34';
- [-1,1].forEach(sd=>{
-   g.save();g.rotate(sd*(.4+f));g.beginPath();g.ellipse(sd*s*.55,0,s*.45,s*.22,0,0,6.3);g.fill();g.restore();
- });
- emo('🐉',0,0,s);
- g.restore();
-}
-
-/* الحيوان الأرجواني المبتسم من الصورة 2 */
-function purpleArmadillo(x,y,s,t){
- g.save();g.translate(x,y+Math.sin(t/250)*6);
- emo('👾',0,0,s);
- g.restore();
-}
-
-/* تصميم خلفية العوالم وتأطير الشاشة بالنباتات المضيئة (صورة 1، 3، 5، 6) */
-function scenery(w,t){
- if(w=='jungle'||w=='magic'){
-  // قوس الأغصان المضيئة بالفطريات المضيئة والزهور الوردية بالكامل (صورة 3)
-  const archGlow=g.createLinearGradient(0,0,0,H);
-  archGlow.addColorStop(0,'rgba(255,100,180,.25)');
-  archGlow.addColorStop(1,'rgba(0,255,150,.15)');
-  g.fillStyle=archGlow;g.fillRect(0,0,W,H);
-
-  // الفطريات المضيئة والأوراق المحيطة بالجانبين والأسفل (صورة 3 وصورة 5)
-  for(let i=0;i<6;i++){
-    const x1=(i/5)*W,y1=H-.1;
-    g.fillStyle=i%2===0?'#ff2a7a':'#00ff99';
-    g.shadowColor=g.fillStyle;g.shadowBlur=18;
-    g.beginPath();g.arc(x1,H-20,18+Math.sin(t/300+i)*4,Math.PI,0);g.fill();
-    g.shadowBlur=0;
-  }
-
-  // أوراق النباتات الخضراء الاستوائية المحيطة (صورة 5)
-  g.fillStyle='rgba(20,160,80,.4)';
-  g.beginPath();g.ellipse(0,H,W*.35,H*.25,0,0,6.3);g.fill();
-  g.beginPath();g.ellipse(W,H,W*.35,H*.25,0,0,6.3);g.fill();
-
-  // النقاط الضوئية المتلألئة الدافئة Sparkles
-  FL.forEach(f=>{
-    g.fillStyle='rgba(255,235,140,'+(.5+.5*Math.sin(t/250+f.p))+')';
-    g.beginPath();g.arc((f.x*W+Math.sin(t/1000+f.p)*20+W)%W,f.y*H+Math.cos(t/1200+f.p)*20,3.5*f.s,0,6.3);g.fill();
-  });
- }
- else if(w=='ocean'){
-  // عالم الصخور المضيئة وحلقات الطاقة المضيئة (صورة 4)
-  for(let i=0;i<5;i++){
-    const x=(i+.5)/5*W,h=H*(.18+(i%3)*.06),sw=Math.sin(t/600+i)*16;
-    g.strokeStyle='#00e5ff';g.lineWidth=8;g.shadowColor='#00e5ff';g.shadowBlur=12;
-    g.beginPath();g.moveTo(x,H);g.quadraticCurveTo(x+sw,H-h*.5,x-sw*.4,H-h);g.stroke();g.shadowBlur=0;
-  }
- }
- else{
-  // البالونات الملونة المحيطة المبهجة (صورة 1)
-  g.fillStyle='rgba(255,255,255,.8)';
-  for(let i=0;i<3;i++){
-    const x=((t*.015*(i+1)+i*W/2.5)%(W+200))-100,y=H*(.18+i*.15),r=28+i*8;
-    g.beginPath();g.ellipse(x,y,r*1.3,r,0,0,6.3);g.fill();
-  }
- }
-}
-
-/* رسم الكرات والحلقات المضيئة باللعبة */
-function orb(o,t,col){
- const R=Math.min(W,H)*.1,sh=o.sh>0?Math.sin(o.sh*2)*9:0;if(o.sh>0)o.sh--;
- const x=o.x*W+sh,y=o.y*H+Math.sin(t/400+o.x*9)*6;
- bubble(x,y,R,col,o.dw/(age==3?5:6),t);
- g.save();g.fillStyle='#ffffff';g.font='900 '+R*1.1+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.shadowColor='rgba(0,0,0,.6)';g.shadowBlur=8;g.fillText(o.t,x,y+2);g.restore();
-}
-
-function setOrbs(a){a.sort(()=>Math.random()-.5);const L=a.length==3?[[.2,.5],[.5,.42],[.8,.5]]:[[.27,.4],[.73,.4],[.27,.62],[.73,.62]];S.orbs=a.map((o,i)=>({x:L[i][0],y:L[i][1],t:o.t,ok:o.ok,dw:0,sh:0}))}
-
-function newMath(){let q,sq,ans;
- if(age==3){ans=1+(Math.random()*5|0);S.q={k:'cnt',n:ans};q='كم عدد النجوم؟';sq=q}
- else{const a=1+(Math.random()*5|0),b=1+(Math.random()*5|0);ans=a+b;S.q={txt:ar(a)+' + '+ar(b)+' = ؟'};q=S.q.txt;sq=ARW[a]+' زائد '+ARW[b]+' يساوي كم؟'}
- const o=[ans];while(o.length<3){const d=Math.max(0,ans+(Math.random()<.5?-1:1)*(1+(Math.random()*2|0)));if(o.indexOf(d)<0)o.push(d)}
- setOrbs(o.map(n=>({t:ar(n),ok:n==ans})));prompt_(q);say(sq)}
-
-function newLetter(){const w=pick(WRD),L=[w[2]],all=WRD.map(x=>x[2]);while(L.length<(age==3?3:4)){const l=pick(all);if(L.indexOf(l)<0)L.push(l)}
- S.q={e:w[1]};setOrbs(L.map(l=>({t:l,ok:l==w[2]})));prompt_('ما أول حرف في كلمة «'+w[0]+'»؟');say('ما أول حرف في كلمة '+w[0]+'؟')}
-
-const FP=[[.12,.34],[.3,.27],[.5,.37],[.7,.27],[.88,.34]],PD=[[.2,.86],[.5,.9],[.8,.86]];
-const ANM=[{e:'🐰',t:'Hüpfe! (اقفز مثل الأرنب)',k:'hop'},{e:'🦅',t:'افرد جناحيك مثل الطائر',k:'wings'},{e:'🐸',t:'اجلس مثل الضفدع',k:'bot'},{e:'🦋',t:'تمايل مثل الفراشة',k:'sway'}];
-const HR=[{x:.3,y:.5,a:0},{x:.7,y:.5,a:0}];
-
-/* حلقات التوجيه المضيئة المحدثة */
-function ring(x,y,r,c,t,pr){
- g.save();g.strokeStyle=c;g.lineWidth=5;g.shadowColor=c;g.shadowBlur=16;g.setLineDash([16,10]);g.lineDashOffset=-t/40;g.beginPath();g.arc(x,y,r,0,6.3);g.stroke();g.restore();
- if(pr>0){g.strokeStyle='#ffffff';g.lineWidth=8;g.beginPath();g.arc(x,y,r+9,-1.57,-1.57+6.283*Math.min(1,pr));g.stroke()}
-}
-
-function hands(t){
- if(game=='dance'||game=='freeze')return;
- HR.forEach(h=>{
-  if(h.a<.15)return;
-  g.save();g.globalAlpha=Math.min(1,h.a);g.shadowColor='#00ffff';g.shadowBlur=18;
-  g.strokeStyle='rgba(255,255,255,.95)';g.lineWidth=4.5;g.setLineDash([8,6]);g.lineDashOffset=-t/30;
-  g.beginPath();g.arc(h.x*W,h.y*H,Math.min(W,H)*.055,0,6.3);g.stroke();g.restore();
- });
-}
-
-function lantern(f,t){
- const R=Math.min(W,H)*.075,x=f.x*W+(f.sh>0?Math.sin(f.sh*2)*8:0),y=f.y*H+Math.sin(t/500+f.x*8)*5;if(f.sh>0)f.sh--;
- const c=COL[f.c][1];ln(x,0,x,y-R,3.5,'#3c9a4a');
- g.save();g.shadowColor=c;g.shadowBlur=28;const gr=g.createRadialGradient(x-R*.3,y-R*.3,R*.1,x,y,R*1.1);
- gr.addColorStop(0,'rgba(255,255,255,.98)');gr.addColorStop(.35,c);gr.addColorStop(1,c);g.fillStyle=gr;
- g.beginPath();g.ellipse(x,y,R*.88,R,0,0,6.3);g.fill();g.restore();
- g.fillStyle='#2f8f45';g.beginPath();g.ellipse(x,y-R,R*.4,R*.18,0,0,6.3);g.fill();
- ring(x,y,R*1.38,'rgba(255,255,255,.9)',t,f.dw/(age==3?4:5));
-}
-
-function initFruit(){S.fr=FP.map(p=>({x:p[0],y:p[1],c:rnd(0,5)|0,dw:0,g:0,sh:0}));S.tgt=age==5?rnd(0,5)|0:-1;if(S.tgt>=0)S.fr[0].c=S.tgt;fruitPrompt()}
-function fruitPrompt(){prompt_(S.tgt<0?'مدّ يدك للأعلى واقطف الثمار المضيئة! 🍊':'اقطف الثمرة ذات اللون '+COL[S.tgt][0],true)}
-function respawn(f){f.c=S.tgt>=0&&Math.random()<.5?S.tgt:rnd(0,5)|0;if(S.tgt>=0&&!S.fr.some(x=>x.c==S.tgt&&!x.g))f.c=S.tgt}
-
-function addRock(){let x,y,i=0;do{x=rnd(.18,.82);y=rnd(.34,.64);i++}while(i<12&&S.rk.some(r=>Math.hypot((r.x-x)*W,(r.y-y)*H)<Math.min(W,H)*.3));S.rk.push({x:x,y:y,hp:2,dw:0,cd:0,sh:0,s:rnd(.9,1.15),h:rnd(1,6)})}
-function initRocks(){S.rk=[];for(let i=0;i<3;i++)addRock();prompt_('حطّم الصخور بيدك لتجمع الجواهر! 💎',true)}
-
-/* تصميم الصخور الكريستالية العائمة المضيئة (صورة 4) */
-function rock(r,t){
- const R=Math.min(W,H)*.11*r.s,x=r.x*W+(r.sh>0?Math.sin(r.sh*2.5)*7:0),y=r.y*H;if(r.sh>0)r.sh--;
- g.save();g.translate(x,y);g.shadowColor='#00e5ff';g.shadowBlur=20;
- const gr=g.createLinearGradient(-R,-R,R,R);gr.addColorStop(0,'#00d2ff');gr.addColorStop(1,'#0033aa');g.fillStyle=gr;
- g.beginPath();
- for(let i=0;i<7;i++){const a=i*6.283/7,q=R*(.85+.15*Math.sin(r.h*i+1));g[i?'lineTo':'moveTo'](Math.cos(a)*q,Math.sin(a)*q)}
- g.closePath();g.fill();g.shadowBlur=0;
- g.fillStyle='#ffd23f';g.beginPath();g.moveTo(0,-R*.3);g.lineTo(R*.22,0);g.lineTo(0,R*.3);g.lineTo(-R*.22,0);g.fill();
- if(r.hp<2){g.strokeStyle='#ffffff';g.lineWidth=3.5;g.beginPath();g.moveTo(-R*.6,-R*.5);g.lineTo(-R*.1,-R*.1);g.lineTo(-R*.3,R*.2);g.lineTo(R*.2,R*.6);g.stroke()}
- g.restore();
- ring(x,y,R*1.32,'#00e5ff',t,r.dw/3);
-}
-
-function newPad(){S.pd=S.pd==null?1:(S.pd+1+(Math.random()*2|0))%3;S.dw=0;prompt_('ادعس الدائرة المضيئة! 👣',true)}
-function newAni(){const sh=()=>[...ANM].sort(()=>Math.random()-.5);if(!S.seq){S.seq=sh();S.ai=0}else{S.ai++;if(S.ai>=4){S.seq=sh();S.ai=0}}S.cur=S.seq[S.ai];S.hold=0;S.sl=0;S.pg=0;S.t0=Date.now();prompt_(S.cur.t,true)}
-
-async function viewMode(){mode=(mode+1)%3;fill=mode==2;try{await cam()}catch(e){}$('pr').textContent=['📐 عرض واسع','📐 عرض كامل للجسم','📐 ملء الشاشة'][mode]}
-
-let tuI=0;
-function timeUp(){S.over=1;let c=10;$('end').hidden=false;$('ep').textContent='سنكمل اللعب تلقائيًا بعد '+c+' ثوانٍ إن لم تختر شيئًا';say('انتهت ثلاثون دقيقة من اللعب. سنكمل تلقائيًا إذا لم تختر شيئًا',true);
- clearInterval(tuI);tuI=setInterval(()=>{c--;$('ep').textContent='سنكمل اللعب تلقائيًا بعد '+c+' ثوانٍ إن لم تختر شيئًا';if(c<=0)extend()},1000)}
-function extend(){clearInterval(tuI);$('end').hidden=true;S.end=Date.now()+18e5;S.over=0;say('هيا نكمل اللعب!',true)}
-
-const HI={dance:'هيا نرقص',copy:'هيا نقلّد الحركة',color:'هيا نبحث عن الألوان',balloons:'هيا نفرقع البالونات',freeze:'هيا نرقص ونتجمد',math:'هيا نحل المسائل',letters:'هيا نتعلم الحروف',dragon:'هيا نطير مع التنين',fruit:'هيا نقطف الثمار',rocks:'هيا نحطم الصخور',animals:'هيا نقلد الحيوانات',hedge:'هيا نصطاد القنافذ',pads:'هيا ندعس الدوائر'};
-
-function allPhrases(){const P=[],a=x=>{x=norm(x);if(x&&P.indexOf(x)<0)P.push(x)};
- Object.keys(HI).forEach(k=>a('مرحبًا يا أبطال! '+HI[k]));OKW.forEach(a);a('حاول مرة أخرى');a('تحرّك أكثر! هيا نرقص');a('تحرّك أكثر!');a('تجمّد! لا تتحرك');
- MOV.forEach(m=>a(m[0]));COL.forEach(c=>{a('أين اللون '+c[0]+'؟ أشر إليه');a('فرقع البالونات '+c[0]);a('اقطف الثمرة ذات اللون '+c[0])});
- a('فرقع البالونات بيدك!');a('كم عدد النجوم؟');for(let i=1;i<6;i++)for(let j=1;j<6;j++)a(ARW[i]+' زائد '+ARW[j]+' يساوي كم؟');
- WRD.forEach(w=>a('ما أول حرف في كلمة '+w[0]+'؟'));a('حرّك جسمك يمينًا ويسارًا لتجمع الكرز!');ARW.slice(1).forEach(a);
- a('مدّ يدك للأعلى واقطف الثمار المضيئة!');a('حطّم الصخور بيدك لتجمع الجواهر!');a('ادعس الدائرة المضيئة!');a('المس القنافذ بيدك!');
- ANM.forEach(m=>a(m.t));a('انتهت ثلاثون دقيقة من اللعب. سنكمل تلقائيًا إذا لم تختر شيئًا');a('هيا نكمل اللعب!');return P}
-
-let SPH=[],si=0,srecR=null,smic=null,sch=[];
-function studio(o){$('studio').hidden=!o;if(o){SPH=allPhrases();si=Math.min(si,SPH.length-1);sshow()}else{sstop(true);vstop();if(smic){smic.getTracks().forEach(t=>t.stop());smic=null}}}
-function sshow(){const t=SPH[si];$('sn').textContent=(si+1)+' / '+SPH.length+'  •  المسجّل: '+SPH.filter(x=>VB[x]).length;$('stx').textContent=t;$('sst').textContent=VB[t]?'✅ مسجّلة':'⭕ غير مسجّلة (تُقرأ بصوت آلي)'}
-function snav(d){sstop(true);si=(si+d+SPH.length)%SPH.length;sshow()}
-function sstop(c){if(srecR){srecR.cancel=c;try{srecR.stop()}catch(e){}}}
-async function srec(){if(srecR){sstop(false);return}vstop();
- try{smic=smic||await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){$('sst').textContent='اسمح باستخدام الميكروفون لـ Safari';return}
- sch=[];const r=new MediaRecorder(smic);srecR=r;r.ondataavailable=e=>{if(e.data&&e.data.size)sch.push(e.data)};
- r.onstop=async()=>{const t=SPH[si];if(sch.length&&!r.cancel){const b=new Blob(sch,{type:r.mimeType||'audio/mp4'});VB[t]=b;await dbPut(t,b)}srecR=null;$('srec').className='sb';$('srec').textContent='🎙️ سجّل';if(r.cancel)sshow();else snav(1)};
- r.start();$('srec').className='sb rec';$('srec').textContent='⏹ إيقاف';$('sst').textContent='🔴 يسجّل الآن... اقرأ الجملة'}
-function splay(){vstop();say(SPH[si])}
-async function sdel(){const t=SPH[si];delete VB[t];await dbDel(t);sshow()}
-
-function loop(t){requestAnimationFrame(loop);T=t;if(!$('hud').hidden){if(run&&t-last>95){last=t;analyze();tick()}else if(!run&&!$('end').hidden){}draw(t)}}
-requestAnimationFrame(loop);
-</script>
-</body>
-</html>
+function home(){clearInterval(tu
