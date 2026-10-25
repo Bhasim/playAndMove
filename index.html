@@ -334,7 +334,7 @@ function fr(x0,y0,x1,y1){if(!mot)return 0;const a=Math.max(0,x0*AW|0),b=Math.max
 function hm(r,gg,b,fn){const m=Math.max(r,gg,b),n=Math.min(r,gg,b),d=m-n;if(m<90||d/m<.5)return false;const h=m==r?((gg-b)/d+6)%6:m==gg?(b-r)/d+2:(r-gg)/d+4;return fn(h*60)}
 function cf(x0,y0,x1,y1,fn){if(!frame)return 0;const G=Math.min(3,Math.max(1,110/Math.max(20,avgB)));const a=x0*AW|0,b=y0*AH|0,c=Math.ceil(x1*AW),d=Math.ceil(y1*AH);let k=0,t=0;for(let y=b;y<d;y++)for(let x=a;x<c;x++){const o=(y*AW+x)*4;if(hm(Math.min(255,frame[o]*G),Math.min(255,frame[o+1]*G),Math.min(255,frame[o+2]*G),fn))k++;t++}return t?k/t:0}
 function tick(){if(!run)return;const rem=Math.max(0,S.end-Date.now()),p2=n=>(n<10?'0':'')+n;$('tm').textContent=p2(rem/60000|0)+':'+p2((rem/1000|0)%60);if(rem<=0&&!S.over)timeUp();$('ttl').textContent=TT[game]+(low?' 🌙':'');$('mt').firstChild.style.width=lv*100+'%';const k=game,now=Date.now();
- if(gNav&&k!='gmenu'){if(fr(.78,0,1,.17)>.18)S.hz=(S.hz||0)+1;else S.hz=Math.max(0,(S.hz||0)-1);$('bk').style.setProperty('--p',Math.min(100,S.hz/25*100)+'%');if(S.hz>=25){S.hz=0;gmLaunch('gmenu');return}}
+ if(gNav&&k!='gmenu'){if(fr(.78,0,1,.17)>.18)S.hz=(S.hz||0)+1;else S.hz=Math.max(0,(S.hz||0)-1);$('bk').style.setProperty('--p',Math.min(100,S.hz/9*100)+'%');if(S.hz>=9){S.hz=0;gmLaunch('gmenu');return}}
  if(k=='dance'){if(sm>(age==3?.03:.06))S.pr+=lv;const need=age==3?18:28;if(S.pr>=need){S.pr=0;S.an++;burst(W/2,H/2);ok()}else if(now-S.t0>14000){S.t0=now;say('تحرّك أكثر! هيا نرقص')}}
  else if(k=='copy'){if(!S.m)return;const m=S.m[2],f=m=='top'?fr(0,0,1,.38):m=='bot'?fr(0,.62,1,1):m=='left'?fr(0,0,.4,1):m=='right'?fr(.6,0,1,1):sm,th=age==3?.07:.1;
   if(f>th)S.hold++;else S.hold=Math.max(0,S.hold-1);const need=age==3?7:6;S.pg=S.hold/need;
