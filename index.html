@@ -5,52 +5,53 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#2a1458">
 <title>العب وتحرّك - الإصدار المطور</title>
-<!-- خط كرتوني جذاب -->
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0;overflow:hidden;background:#2a1458;font-family:'Fredoka One',system-ui,-apple-system,sans-serif;color:#fff;touch-action:manipulation}
-#c{position:fixed;left:0;top:0;width:100%;height:100%;display:block}
+/* منع الكانفاس من سرقة ضغطات الأزرار */
+#c{position:fixed;left:0;top:0;width:100%;height:100%;display:block;pointer-events:none;z-index:1}
 [hidden]{display:none!important}
 button{font:inherit;color:#fff;border:0;cursor:pointer}
 .glass{background:rgba(255,255,255,.15);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:2px solid rgba(255,255,255,.4);box-shadow:0 8px 28px rgba(0,0,0,.3)}
-#menu{position:fixed;inset:0;overflow:auto;text-align:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 14px calc(env(safe-area-inset-bottom,0px) + 16px);background:radial-gradient(circle at 15% 8%,#ff5fa2 0,transparent 42%),radial-gradient(circle at 88% 28%,#35c8ff 0,transparent 42%),radial-gradient(circle at 40% 98%,#ffc93c 0,transparent 38%),#2a1458}
+#menu{position:fixed;inset:0;overflow:auto;text-align:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 14px calc(env(safe-area-inset-bottom,0px) + 16px);background:radial-gradient(circle at 15% 8%,#ff5fa2 0,transparent 42%),radial-gradient(circle at 88% 28%,#35c8ff 0,transparent 42%),radial-gradient(circle at 40% 98%,#ffc93c 0,transparent 38%),#2a1458;z-index:10}
 h1{margin:6px 0 2px;font-size:36px;text-shadow:0 4px 0 rgba(0,0,0,.3);letter-spacing:1px}
 .sub{opacity:.9;margin:0 0 12px;font-size:15px}
 .ages{display:flex;gap:10px;max-width:520px;margin:0 auto 14px}
-.ages button{flex:1;padding:12px;border-radius:20px;font-size:18px;font-weight:700;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);transition:all .2s}
+.ages button{flex:1;padding:12px;border-radius:20px;font-size:18px;font-weight:700;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);transition:all .2s;touch-action:manipulation}
 .ages button.on{background:#fff;color:#4a2a9a;box-shadow:0 4px 0 #ccc}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px;margin:0 auto}
-.card{border-radius:24px;padding:16px 8px;font-size:19px;font-weight:800;line-height:1.35;box-shadow:0 6px 0 rgba(0,0,0,.3),0 12px 24px rgba(0,0,0,.2);transition:transform .1s;border:2px solid rgba(255,255,255,.2)}
+/* تحسين استجابة الأزرار */
+.card{border-radius:24px;padding:16px 8px;font-size:19px;font-weight:800;line-height:1.35;box-shadow:0 6px 0 rgba(0,0,0,.3),0 12px 24px rgba(0,0,0,.2);transition:transform .1s,opacity .2s;border:2px solid rgba(255,255,255,.2);cursor:pointer;touch-action:manipulation;position:relative;user-select:none;-webkit-user-select:none}
 .card:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.3)}
 .card:last-child{grid-column:span 2}
 .card i{display:block;font-style:normal;font-size:48px;filter:drop-shadow(0 4px 4px rgba(0,0,0,.25))}
 .card small{display:block;font-size:12px;font-weight:500;opacity:.95}
-#err{color:#ffd6d6;min-height:22px;margin-top:12px;font-size:15px}
+#err{color:#ffd6d6;min-height:22px;margin-top:12px;font-size:15px;font-weight:bold}
 .tip{font-size:13px;opacity:.85;max-width:520px;margin:6px auto}
-#hud{position:fixed;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 6px) 10px 0;pointer-events:none}
+#hud{position:fixed;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 6px) 10px 0;pointer-events:none;z-index:10}
 #hud>*{pointer-events:auto}
 .bar{display:flex;align-items:center;justify-content:space-between;border-radius:20px;padding:4px 10px;background:rgba(40,20,90,.6)}
-.ib{background:#fff; color:#4a2a9a; border-radius:14px; padding:6px 12px; font-weight:900; box-shadow:0 4px 0 #999; margin:0 2px; transition:transform .1s}
+.ib{background:#fff; color:#4a2a9a; border-radius:14px; padding:6px 12px; font-weight:900; box-shadow:0 4px 0 #999; margin:0 2px; transition:transform .1s; touch-action:manipulation;}
 .ib:active{transform:translateY(4px); box-shadow:0 0 0 #999}
 #ttl{font-size:14px}#st{font-size:20px; color:#ffd23f; text-shadow:0 2px 0 #b38000, 0 0 10px #ffd23f}
 #pr{margin:6px auto 0;width:fit-content;max-width:95%;border-radius:20px;padding:8px 20px;font-size:clamp(16px,4vw,22px);font-weight:800;text-align:center;background:rgba(30,15,70,0.8);border:3px solid #fff;box-shadow:0 6px 0 #4a2a9a, 0 10px 20px rgba(0,0,0,0.3);text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
 #mt{margin:6px auto 0;width:40%;max-width:220px;height:8px;border-radius:8px;background:rgba(0,0,0,.4);overflow:hidden;border:1px solid rgba(255,255,255,.3)}
 #mt i{display:block;height:100%;width:0;background:linear-gradient(90deg,#46e0a0,#ffd23f,#ff5f7a);transition:width .1s}
-#bn{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(40px, 12vw, 90px);font-weight:900;color:#fff;font-family:'Fredoka One',sans-serif;-webkit-text-stroke:4px #ff3da6;paint-order:stroke fill;text-shadow:0 6px 0 #4a2a9a, 0 0 30px rgba(255, 61, 166, 0.8);pointer-events:none;opacity:0;transform:scale(.4);transition:all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);text-align:center;padding:0 10px;z-index:10}
+#bn{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(40px, 12vw, 90px);font-weight:900;color:#fff;font-family:'Fredoka One',sans-serif;-webkit-text-stroke:4px #ff3da6;paint-order:stroke fill;text-shadow:0 6px 0 #4a2a9a, 0 0 30px rgba(255, 61, 166, 0.8);pointer-events:none;opacity:0;transform:scale(.4);transition:all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);text-align:center;padding:0 10px;z-index:20}
 #bn.on{opacity:1;transform:scale(1)}
-#end{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);transform:translateX(-50%);width:min(90vw,400px);border-radius:24px;padding:16px;text-align:center;background:rgba(60,30,140,.95);border:3px solid #fff;z-index:11}
+#end{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);transform:translateX(-50%);width:min(90vw,400px);border-radius:24px;padding:16px;text-align:center;background:rgba(60,30,140,.95);border:3px solid #fff;z-index:30;pointer-events:auto}
 #end h2{margin:0 0 4px;font-size:22px;color:#ffd23f}#end p{font-size:16px;margin:6px 0 12px}
-#end button{display:block;width:100%;margin:8px 0;padding:12px;border-radius:16px;font-size:18px;font-weight:800;background:#ff5fa2;box-shadow:0 4px 0 #c4266e;transition:all .1s}
+#end button{display:block;width:100%;margin:8px 0;padding:12px;border-radius:16px;font-size:18px;font-weight:800;background:#ff5fa2;box-shadow:0 4px 0 #c4266e;transition:all .1s;touch-action:manipulation}
 #end button:active{transform:translateY(4px);box-shadow:0 0 0 #c4266e}
 #end button+button{background:#4fb7ff;box-shadow:0 4px 0 #2a7bcc}
 #v{position:fixed;width:2px;height:2px;opacity:0;pointer-events:none}
 @media(max-height:520px){#bn{font-size:9vw} .card{padding:10px 4px} .card i{font-size:32px}}
-#studio{position:fixed;inset:0;background:rgba(20,8,60,.95);display:flex;align-items:center;justify-content:center;padding:12px;z-index:20}
+#studio{position:fixed;inset:0;background:rgba(20,8,60,.95);display:flex;align-items:center;justify-content:center;padding:12px;z-index:40}
 .sbox{width:min(94vw,460px);border-radius:26px;padding:20px;text-align:center;background:rgba(255,255,255,.1)}
 .srow{display:flex;gap:8px;justify-content:space-between;align-items:center;margin:8px 0}
 #stx{font-size:clamp(20px,5vw,28px);font-weight:800;margin:12px 0;min-height:2.6em;color:#ffd23f}
-.sb{flex:1;padding:14px;border-radius:16px;font-size:17px;font-weight:700;background:#7a4ae8;margin:4px 0;width:100%;box-shadow:0 4px 0 #4a2a9a;border:2px solid rgba(255,255,255,.2)}
+.sb{flex:1;padding:14px;border-radius:16px;font-size:17px;font-weight:700;background:#7a4ae8;margin:4px 0;width:100%;box-shadow:0 4px 0 #4a2a9a;border:2px solid rgba(255,255,255,.2);touch-action:manipulation}
 .sb:active{transform:translateY(4px);box-shadow:0 0 0 #4a2a9a}
 #srec.rec{background:#e53950;box-shadow:0 4px 0 #a01a2d}
 </style>
@@ -64,19 +65,20 @@ h1{margin:6px 0 2px;font-size:36px;text-shadow:0 4px 0 rgba(0,0,0,.3);letter-spa
   <p class="sub">ألعاب تلعبها بحركتك أمام الكاميرا، بدون لمس الشاشة</p>
   <div class="ages"><button id="a3" class="on" onclick="setAge(3)">👶 عمر 3 سنوات</button><button id="a5" onclick="setAge(5)">🧒 عمر 5 سنوات</button></div>
   <div class="cards">
-    <button class="card" style="background:linear-gradient(145deg,#ffb347,#ff6a3d)" onclick="start('fruit')"><i>🍊</i>قطف الثمار<small>مدّ يدك للأعلى واقطفها</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#37c8d8,#2a6fd8)" onclick="start('rocks')"><i>💎</i>حطّم الصخور<small>اضرب الصخرة بيدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#b784ff,#ff6fb1)" onclick="start('animals')"><i>🐰</i>قلّد الحيوانات<small>اقفز، افرد جناحيك، اجلس</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#7fdc5a,#2f9a4a)" onclick="start('hedge')"><i>🦔</i>اصطد القنافذ<small>المس القنافذ بيدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#ffd84d,#7dff9a)" onclick="start('pads')"><i>👣</i>ادعس الدوائر<small>ادعس الدائرة المضيئة</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#2fd27a,#0f8a5a)" onclick="start('math')"><i>🧮</i>غابة الأرقام<small>أجب عن المسألة بحركة يدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#a58bff,#6a3fd8)" onclick="start('letters')"><i>🔤</i>الكرات السحرية<small>اختر الحرف الصحيح بيدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#59d0ff,#2f7bff)" onclick="start('dragon')"><i>🐉</i>طيران التنين<small>حرّك جسمك لتجمع الكرز</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#ff8a5c,#ff4f7b)" onclick="start('dance')"><i>💃</i>ارقص مع الحيوانات<small>كلما تحركت أكثر رقص أكثر</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#4fb7ff,#4a63ff)" onclick="start('copy')"><i>🧒</i>قلّد الحركة<small>أعلى، أسفل، يمين، يسار</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#47e0a0,#12a58c)" onclick="start('color')"><i>🎨</i>أشر إلى اللون<small>أشر إلى الفقاعة الملونة</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#ffd23f,#ff9a2e)" onclick="start('balloons')"><i>🎈</i>فرقع البالونات<small>المس البالون بيدك</small></button>
-    <button class="card" style="background:linear-gradient(145deg,#8fd3ff,#5b8cff)" onclick="start('freeze')"><i>🧊</i>ارقص وتجمّد<small>تجمّد عندما تتوقف الموسيقى</small></button>
+    <!-- تمت إضافة this لتمرير الزر المظغوط لإظهار حالة التحميل -->
+    <button class="card" style="background:linear-gradient(145deg,#ffb347,#ff6a3d)" onclick="start('fruit', this)"><i>🍊</i>قطف الثمار<small>مدّ يدك للأعلى واقطفها</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#37c8d8,#2a6fd8)" onclick="start('rocks', this)"><i>💎</i>حطّم الصخور<small>اضرب الصخرة بيدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#b784ff,#ff6fb1)" onclick="start('animals', this)"><i>🐰</i>قلّد الحيوانات<small>اقفز، افرد جناحيك، اجلس</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#7fdc5a,#2f9a4a)" onclick="start('hedge', this)"><i>🦔</i>اصطد القنافذ<small>المس القنافذ بيدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ffd84d,#7dff9a)" onclick="start('pads', this)"><i>👣</i>ادعس الدوائر<small>ادعس الدائرة المضيئة</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#2fd27a,#0f8a5a)" onclick="start('math', this)"><i>🧮</i>غابة الأرقام<small>أجب عن المسألة بحركة يدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#a58bff,#6a3fd8)" onclick="start('letters', this)"><i>🔤</i>الكرات السحرية<small>اختر الحرف الصحيح بيدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#59d0ff,#2f7bff)" onclick="start('dragon', this)"><i>🐉</i>طيران التنين<small>حرّك جسمك لتجمع الكرز</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ff8a5c,#ff4f7b)" onclick="start('dance', this)"><i>💃</i>ارقص مع الحيوانات<small>كلما تحركت أكثر رقص أكثر</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#4fb7ff,#4a63ff)" onclick="start('copy', this)"><i>🧒</i>قلّد الحركة<small>أعلى، أسفل، يمين، يسار</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#47e0a0,#12a58c)" onclick="start('color', this)"><i>🎨</i>أشر إلى اللون<small>أشر إلى الفقاعة الملونة</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ffd23f,#ff9a2e)" onclick="start('balloons', this)"><i>🎈</i>فرقع البالونات<small>المس البالون بيدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#8fd3ff,#5b8cff)" onclick="start('freeze', this)"><i>🧊</i>ارقص وتجمّد<small>تجمّد عندما تتوقف الموسيقى</small></button>
   </div>
   <button class="card" style="display:block;width:100%;max-width:520px;margin:12px auto 0;background:linear-gradient(145deg,#ff7aa2,#c84bd8)" onclick="studio(1)"><i>🎙️</i>استوديو الصوت<small>سجّل صوت طفل أو أم لكل كلمات اللعبة</small></button>
   <div id="err"></div>
@@ -95,9 +97,9 @@ h1{margin:6px 0 2px;font-size:36px;text-shadow:0 4px 0 rgba(0,0,0,.3);letter-spa
   <div id="mt"><i></i></div>
 </div>
 
-<div id="bn️"></div>
+<div id="bn"></div>
 
-<div',' id="studioleft" hidden><'],div class="sbox glass">
+<div id="studio" hidden><div class="sbox glass">
   <div class="srow"><b>🎙️ استوديو الصوت</b><button class="ib" onclick="studio(0)">✖ إغلاق</button></div>
   <div id="sn"></div><div id="stx"></div><div id="sst"></div>
   <div class="srow"><button id="srec" class="sb" onclick="srec()">🎙️ سجّل</button><button class="sb" onclick="splay()">▶ استمع</button></div>
@@ -113,8 +115,9 @@ const $=i=>document.getElementById(i);
 const cvs=$('c'),g=cvs.getContext('2d'),v=$('v'),an=document.createElement('canvas'),ag=an.getContext('2d',{willReadFrequently:true});
 let pm=0,avgB=128,low=false,mode=0,fill=false,SW=0,SH=0,PX=0,PY=0,vk="",camIdx=0,cams=[{f:"user",n:"الكاميرا الأمامية"},{f:"environment",n:"الكاميرا الخلفية"}],W=0,H=0,AW=40,AH=80,age=3,goal=5,game='',run=false,stars=0,facing='user',stream=null,ac=null,music=false,endT=0,last=0,T=0,S={};
 let cxm=.5,prevL=null,hasPrev=false,mot=null,frame=null,sm=0,lv=0,P=[],lastFail=0;
+let starting = false; // ★ قفل لمنع الضغط المتكرر أثناء فتح الكاميرا
 const COL=[['الأحمر','#ff4d5e',h=>h<14||h>346],['الأصفر','#ffd23f',h=>h>44&&h<68],['الأخضر','#38c172',h=>h>85&&h<160],['الأزرق','#3d8bff',h=>h>195&&h<250],['البرتقالي','#ff9a2e',h=>h>=18&&h<=38]];
-const MOV=[['ارفع يديك للأعلى','⬆️','top'],['انزل للأسفل','⬇️','bot'],['تحرّك ناحية اليسار','⬅['تحرّك ناحية اليمين','➡️','right'],['اقفز عاليًا','🦘','all']];
+const MOV=[['ارفع يديك للأعلى','⬆️','top'],['انزل للأسفل','⬇️','bot'],['تحرّك ناحية اليسار','⬅️','left'],['تحرّك ناحية اليمين','➡️','right'],['اقفز عاليًا','🦘','all']];
 const ANI=['🐻','🦁','🐼','🐵','🐶','🦄','🐯','🐸','🐰','🦊'];
 const OKW=['أحسنت','أحسنت يا بطل','برافو','ممتاز','مثالي','رائع'];
 const TT={dance:'💃 الرقص',copy:'🧒 قلّد الحركة',color:'🎨 أشر إلى اللون',balloons:'🎈 البالونات',freeze:'🧊 تجمّد',math:'🧮 غابة الأرقام',letters:'🔤 الكرات السحرية',dragon:'🐉 طيران التنين',fruit:'🍊 قطف الثمار',rocks:'💎 حطّم الصخور',animals:'🐰 قلّد الحيوانات',hedge:'🦔 القنافذ',pads:'👣 الدوائر'};
@@ -125,10 +128,9 @@ const rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.random()*a.length|0];
 const IMG = {};
 function loadImg(name, url) {
   IMG[name] = new Image();
-  IMG[name].crossOrigin = "Anonymous"; // لتجنب مشاكل CORS
+  IMG[name].crossOrigin = "Anonymous";
   IMG[name].src = url;
 }
-// روابط صور PNG شفافة وعالية الجودة
 loadImg('fox', 'https://cdn-icons-png.flaticon.com/512/616/616408.png');
 loadImg('dragon', 'https://cdn-icons-png.flaticon.com/512/1998/1998664.png');
 loadImg('bunny', 'https://cdn-icons-png.flaticon.com/512/1998/1998610.png');
@@ -137,7 +139,6 @@ loadImg('fruit', 'https://cdn-icons-png.flaticon.com/512/415/415733.png');
 loadImg('rock', 'https://cdn-icons-png.flaticon.com/512/2935/2935490.png');
 loadImg('star', 'https://cdn-icons-png.flaticon.com/512/1828/1828884.png');
 
-// دالة رسم الصور (مع fallback للإيموجي في حال فشل التحميل)
 function drawImg(name, x, y, size, rot, fallbackEmoji) {
   if (IMG[name] && IMG[name].complete && IMG[name].naturalWidth > 0) {
     g.save(); g.translate(x, y); g.rotate(rot || 0);
@@ -160,9 +161,12 @@ const SIL='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAg
 const AEL=new Audio();AEL.preload='auto';
 let VB={},VM={},VQ=[],vbusy=false,vgen=0;
 let audioUnlocked = false;
+
 function unlockAudioNow() {
   if (audioUnlocked) return;
   audioUnlocked = true;
+  
+  // 1. تفعيل سياق الصوت (Audio Context) بهدوء
   try {
     ac = ac || new (window.AudioContext || window.webkitAudioContext)();
     if (ac.state === 'suspended') ac.resume();
@@ -171,22 +175,28 @@ function unlockAudioNow() {
     o.connect(gn); gn.connect(ac.destination);
     o.start(0); o.stop(ac.currentTime + 0.05);
   } catch(e) {}
+
+  // 2. تفعيل عنصر الصوت
   try { AEL.muted = false; AEL.src = SIL; AEL.play().catch(()=>{}); } catch(e) {}
-  try {
-    if (window.speechSynthesis) {
-      const u = new SpeechSynthesisUtterance('هيا');
-      u.lang = 'ar-SA'; u.volume = 0.01; u.rate = 2;
-      speechSynthesis.speak(u);
-    }
-  } catch(e) {}
+
+  // 3. تفعيل النطق (TTS) في الخلفية لتجنب تجميد الواجهة
+  setTimeout(() => {
+    try {
+      if (window.speechSynthesis) {
+        const u = new SpeechSynthesisUtterance('هيا');
+        u.lang = 'ar-SA'; u.volume = 0.01; u.rate = 2;
+        speechSynthesis.speak(u);
+      }
+    } catch(e) {}
+  }, 50);
 }
+
 if (window.speechSynthesis) {
   try {
     speechSynthesis.getVoices();
     speechSynthesis.onvoiceschanged = () => { try { speechSynthesis.getVoices(); } catch(e){} };
   } catch(e) {}
 }
-document.addEventListener('pointerdown', unlockAudioNow, {once:true, capture:true});
 /* ========================================================= */
 
 function norm(t){return String(t).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu,'').replace(/\s+/g,' ').trim()}
@@ -214,14 +224,34 @@ async function cam(){if(stream)stream.getTracks().forEach(t=>t.stop());const c=c
  stream=await navigator.mediaDevices.getUserMedia({video:c.id?Object.assign({deviceId:{exact:c.id}},sz):Object.assign({facingMode:c.f},sz),audio:false});v.srcObject=stream;await v.play();prevL=null;hasPrev=false;fit();await addWide()}
 async function flip(){camIdx=(camIdx+1)%cams.length;try{await cam();banner('📷');$('pr').textContent=cams[camIdx].n}catch(e){camIdx=0;try{await cam()}catch(e2){}}}
 
-async function start(k){
-  // ★ فتح الصوت والنطق قبل أي await
+/* ================== دالة البدء مع الحماية من التعليق ================== */
+async function start(k, btn){
+  if(starting) return; // منع تكرار الضغط
+  starting = true;
+  
+  // إظهار حالة التحميل على الزر فوراً
+  if(btn) {
+    btn.dataset.old = btn.innerHTML;
+    btn.innerHTML = '<i>⏳</i>جاري التحميل...';
+    btn.style.opacity = '0.7';
+  }
+
+  // ★ فتح الصوت فوراً قبل await
   unlockAudioNow();
   game=k; clearTimeout(endT); $('end').hidden=true;
+  $('err').textContent = ''; // مسح الأخطاء السابقة
   say('مرحبًا يا أبطال! '+HI[k], true);
 
-  try{ await cam() }catch(e){
-    $('err').textContent='لم تفتح الكاميرا. اسمح بالكاميرا لموقع Safari، وافتح الصفحة عبر رابط https.';
+  try{ 
+    await cam(); 
+  }catch(e){
+    // إظهار الخطأ وإرجاع الزر لحالته الطبيعية
+    $('err').textContent='⚠️ تعذر فتح الكاميرا. يرجى السماح بالوصول للكاميرا وفتح الصفحة عبر رابط https.';
+    if(btn) {
+      btn.innerHTML = btn.dataset.old;
+      btn.style.opacity = '1';
+    }
+    starting = false;
     return;
   }
 
@@ -229,6 +259,7 @@ async function start(k){
   $('ttl').textContent=TT[k]; stars=0; goal=1e9; $('st').textContent='⭐ 0';
   S={t0:Date.now(),pr:0,an:0,hold:0,b:[],sp:0,cnt:0,ph:'move',sc:0,bad:0,tgt:-1,end:Date.now()+18e5,over:0};
   run=true;
+  starting = false;
 
   if(k=='dance'){prompt_('ارقص مع الحيوان! 💃');music=true}
   else if(k=='freeze'){S.ph='move';S.t0=Date.now();music=true;prompt_('ارقص مع الموسيقى! 🎵')}
@@ -236,7 +267,7 @@ async function start(k){
   else nextRound();
 }
 
-function home(){clearInterval(tuI);run=false;music=false;clearTimeout(endT);vstop();$('hud').hidden=true;$('end').hidden=true;$('menu').hidden=false;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;frame=null}
+function home(){clearInterval(tuI);run=false;music=false;clearTimeout(endT);vstop();$('hud').hidden=true;$('end').hidden=true;$('menu').hidden=false;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;frame=null;starting=false;}
 function balPrompt(){if(S.tgt<0)prompt_('فرقع البالونات بيدك! 🎈',true);else prompt_('فرقع البالونات '+COL[S.tgt][0],true)}
 function nextRound(){S.hold=0;S.t0=Date.now();
  if(game=='copy'){S.m=pick(age==3?[MOV[0],MOV[2],MOV[3],MOV[4]]:MOV);prompt_(S.m[0],true)}
@@ -245,7 +276,7 @@ function nextRound(){S.hold=0;S.t0=Date.now();
  else if(game=='math')newMath();else if(game=='letters')newLetter();else if(game=='dragon'&&!S.it){S.it=[];S.dx=.5;S.n=0;prompt_('حرّك جسمك يمينًا ويسارًا لتجمع الكرز! 🍒',true)}
  else if(game=='fruit'&&!S.fr)initFruit();else if(game=='rocks'&&!S.rk)initRocks();else if(game=='pads')newPad();else if(game=='animals')newAni();else if(game=='hedge'&&!S.hg){S.hg=[];prompt_('المس القنافذ بيدك! 🦔',true)}}
 function analyze(){if(v.readyState<2||!v.videoWidth)return;
- const vw=v.videoWidth,vh=v.videoHeight;if(vw+'x'+vh!==vk){vk=vw+'x'+vh;fit();return}const s=Math.max(AW/vw,AH/vh),dw=vw*s,dh=vh*s;
+ const vw=v.videoWidth,vh=v.videoHeight;if(vw+'x'+vh!==vk){vk=vw+'x'+vh;fit();return}const s=Math.max(AW/vw,AH/vh),dw=vw*s,dh=vh*sd;
  ag.save();ag.translate(AW,0);ag.scale(-1,1);ag.drawImage(v,(AW-dw)/2,(AH-dh)/2,dw,dh);ag.restore();
  frame=ag.getImageData(0,0,AW,AH).data;const n=AW*AH;
  if(!prevL||prevL.length!=n){prevL=new Int16Array(n);hasPrev=false}if(!mot||mot.length!=n)mot=new Uint8Array(n);
@@ -253,7 +284,7 @@ function analyze(){if(v.readyState<2||!v.videoWidth)return;
  const mean=tot/n,adj=hasPrev?mean-pm:0,TH=Math.max(low?32:24,Math.min(90,mean*.26));pm=mean;avgB=avgB*.8+mean/3*.2;low=avgB<75;
  let c=0,sx=0,cL=0,lx=0,ly=0,cR=0,rx=0,ry=0;for(let i=0;i<n;i++){const o=i*4,L=frame[o]+frame[o+1]+frame[o+2];const m=hasPrev&&Math.abs(L-prevL[i]-adj)>TH?1:0;mot[i]=m;c+=m;if(m){const xx=i%AW;sx+=xx;if(xx<AW/2){cL++;lx+=xx;ly+=i/AW|0}else{cR++;rx+=xx;ry+=i/AW|0}}prevL[i]=L}
  [[cL,lx,ly,0],[cR,rx,ry,1]].forEach(a=>{const h=HR[a[3]];if(a[0]>5){h.x+=(a[1]/a[0]/AW-h.x)*.5;h.y+=(a[2]/a[0]/AH-h.y)*.5;h.a=1}else h.a*=.8});hasPrev=true;if(c>n*.012)cxm=cxm*.7+(sx/c/AW)*.3;sm=sm*.6+(c/n)*.4;lv=Math.min(1,sm/.2)}
-function fr(x0,y0,x1,y1){if(!mot)return 0;const a=Math.max(0,x0*AW|0),b=Math.max(0,y0*AH|0),c=Math.min(AW,Math.ceil(x1*AW)),d=Math.min(AH,Math.ceil(y1*AH));let k=0,t=0;for(let y=b;y<d;y++)for(let x=a;x<c;x++){k+=mot[y*AW+x];t++}return t?k/t:0}
+function fr(x0,y0,x1,y1){if(!mot)return 0;const a=Math.max(0,x0*AW|0),b=Math.max(0,y0*AH|0),c=Math.min(AW,Math.ceil(x1*AW)),=Math.min(AH,Math.ceil(y1*AH));let k=0,t=0;for(let y=b;y<d;y++)for(let x=a;x<c;x++){k+=mot[y*AW+x];t++}return t?k/t:0}
 function hm(r,gg,b,fn){const m=Math.max(r,gg,b),n=Math.min(r,gg,b),d=m-n;if(m<90||d/m<.5)return false;const h=m==r?((gg-b)/d+6)%6:m==gg?(b-r)/d+2:(r-gg)/d+4;return fn(h*60)}
 function cf(x0,y0,x1,y1,fn){if(!frame)return 0;const G=Math.min(3,Math.max(1,110/Math.max(20,avgB)));const a=x0*AW|0,b=y0*AH|0,c=Math.ceil(x1*AW),d=Math.ceil(y1*AH);let k=0,t=0;for(let y=b;y<d;y++)for(let x=a;x<c;x++){const o=(y*AW+x)*4;if(hm(Math.min(255,frame[o]*G),Math.min(255,frame[o+1]*G),Math.min(255,frame[o+2]*G),fn))k++;t++}return t?k/t:0}
 function tick(){if(!run)return;const rem=Math.max(0,S.end-Date.now()),p2=n=>(n<10?'0':'')+n;$('tm').textContent=p2(rem/60000|0)+':'+p2((rem/1000|0)%60);if(rem<=0&&!S.over)timeUp();$('ttl').textContent=TT[game]+(low?' 🌙':'');$('mt').firstChild.style.width=lv*100+'%';const k=game,now=Date.now();
@@ -442,7 +473,6 @@ function drawP(){
     g.fillStyle=p.c;
     g.shadowColor=p.c; g.shadowBlur=15;
     g.save(); g.translate(p.x, p.y); g.rotate(p.rot);
-    // رسم نجمة بدلاً من دائرة
     g.beginPath();
     for(let i=0;i<5;i++){
       g.lineTo(Math.cos((18+i*72)/180*Math.PI)*p.r, -Math.sin((18+i*72)/180*Math.PI)*p.r);
@@ -607,6 +637,9 @@ async function srec(){if(srecR){sstop(false);return}vstop();
  r.start();$('srec').className='sb rec';$('srec').textContent='⏹ إيقاف';$('sst').textContent='🔴 يسجّل الآن... اقرأ الجملة'}
 function splay(){vstop();say(SPH[si])}
 async function sdel(){const t=SPH[si];delete VB[t];await dbDel(t);sshow()}
+
+// تفعيل :active على الآيفون
+document.addEventListener("touchstart", function(){}, {passive:true});
 
 function loop(t){requestAnimationFrame(loop);T=t;if(!$('hud').hidden){if(run&&t-last>95){last=t;analyze();tick()}else if(!run&&!$('end').hidden){}draw(t)}}
 requestAnimationFrame(loop);
