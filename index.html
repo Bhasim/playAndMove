@@ -135,6 +135,7 @@ h1{margin:4px 0 2px;font-size:clamp(32px,9vw,44px);font-weight:900;letter-spacin
   <h1>العب وتحرّك</h1>
   <p class="sub">ألعاب تلعبها بحركتك أمام الكاميرا، بدون لمس الشاشة</p>
   <div class="ages"><button id="a3" class="on" onclick="setAge(3)">👶 عمر 3 سنوات</button><button id="a5" onclick="setAge(5)">🧒 عمر 5 سنوات</button></div>
+  <button class="card wide-card" style="background:linear-gradient(145deg,#5ee0ff,#7a5cff);margin:0 0 14px" onclick="start('gmenu',this)"><i>🖐️</i>اختر اللعبة بالإشارة<small>لوّح بيدك من بعيد فوق اللعبة دون لمس الشاشة</small></button>
   <div class="cards">
     <button class="card" style="background:linear-gradient(145deg,#ffb347,#ff6a3d)" onclick="start('fruit',this)"><i>🍊</i>قطف الثمار<small>مدّ يدك للأعلى واقطفها</small></button>
     <button class="card" style="background:linear-gradient(145deg,#37c8d8,#2a6fd8)" onclick="start('rocks',this)"><i>💎</i>حطّم الصخور<small>اضرب الصخرة بيدك</small></button>
@@ -149,6 +150,14 @@ h1{margin:4px 0 2px;font-size:clamp(32px,9vw,44px);font-weight:900;letter-spacin
     <button class="card" style="background:linear-gradient(145deg,#47e0a0,#12a58c)" onclick="start('color',this)"><i>🎨</i>أشر إلى اللون<small>أشر إلى الفقاعة الملونة</small></button>
     <button class="card" style="background:linear-gradient(145deg,#ffd23f,#ff9a2e)" onclick="start('balloons',this)"><i>🎈</i>فرقع البالونات<small>المس البالون بيدك</small></button>
     <button class="card" style="background:linear-gradient(145deg,#8fd3ff,#5b8cff)" onclick="start('freeze',this)"><i>🧊</i>ارقص وتجمّد<small>تجمّد عندما تتوقف الموسيقى</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ff9bd2,#9a6bff)" onclick="start('shapes',this)"><i>🔷</i>أين الشكل؟<small>أشر إلى الشكل المطلوب</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ffcf5a,#ff8a3d)" onclick="start('zoo',this)"><i>🦁</i>أين الحيوان؟<small>اختر الحيوان الصحيح بيدك</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#4fd6ff,#2a7bd8)" onclick="start('fish',this)"><i>🐟</i>اصطد السمك<small>المس الأسماك السابحة</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#8be36a,#2fb58a)" onclick="start('bfly',this)"><i>🦋</i>اصطد الفراشات<small>المس الفراشات الطائرة</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#7dff9a,#1fa86a)" onclick="start('jump',this)"><i>🐸</i>قفز الضفدع<small>اقفز عدد المرات المطلوب</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#a78bfa,#6d3fd8)" onclick="start('space',this)"><i>🚀</i>مركبات الفضاء<small>المس المركبات الفضائية</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#8fd0ff,#5b6be0)" onclick="start('birds',this)"><i>🐦</i>اصطد الطيور<small>المس الطيور المحلّقة</small></button>
+    <button class="card" style="background:linear-gradient(145deg,#ffe27a,#c58fd8)" onclick="start('stars',this)"><i>⭐</i>اجمع النجوم<small>المس النجوم المتلألئة</small></button>
   </div>
   <button class="card wide-card" style="background:linear-gradient(145deg,#ff7aa2,#c84bd8)" onclick="studio(1)"><i>🎙️</i>استوديو الصوت<small>سجّل صوت طفل أو أم لكل كلمات اللعبة</small></button>
   <div id="err"></div>
@@ -158,7 +167,7 @@ h1{margin:4px 0 2px;font-size:clamp(32px,9vw,44px);font-weight:900;letter-spacin
 
 <div id="hud" hidden>
   <div class="bar glass">
-    <button class="ib" onclick="home()">⬅ رجوع</button>
+    <button class="ib" onclick="back()">⬅ رجوع</button>
     <b id="ttl"></b>
     <span id="st">⭐ 0</span>
     <span id="tm">30:00</span>
@@ -179,18 +188,19 @@ h1{margin:4px 0 2px;font-size:clamp(32px,9vw,44px);font-weight:900;letter-spacin
   <p>اقرأ الجملة بصوت واضح. بعد الإيقاف ينتقل تلقائيًا للجملة التالية.</p>
 </div></div>
 
-<div id="end" hidden><h2>⏰ انتهت 30 دقيقة من اللعب</h2><p id="ep"></p><button onclick="extend()">▶ أكمل 30 دقيقة أخرى</button><button onclick="home()">🏠 اختر لعبة أخرى</button></div>
+<div id="end" hidden><h2>⏰ انتهت 30 دقيقة من اللعب</h2><p id="ep"></p><button onclick="extend()">▶ أكمل 30 دقيقة أخرى</button><button onclick="back()">🏠 اختر لعبة أخرى</button></div>
 
 <script>
 const $=i=>document.getElementById(i);
 const cvs=$('c'),g=cvs.getContext('2d'),v=$('v'),an=document.createElement('canvas'),ag=an.getContext('2d',{willReadFrequently:true});
 let pm=0,avgB=128,low=false,mode=0,fill=false,SW=0,SH=0,PX=0,PY=0,vk="",camIdx=0,cams=[{f:"user",n:"الكاميرا الأمامية"},{f:"environment",n:"الكاميرا الخلفية"}],W=0,H=0,AW=40,AH=80,age=3,goal=5,game='',run=false,stars=0,stream=null,ac=null,music=false,endT=0,last=0,T=0,S={},startTok=0,tuI=0,wl=null;
+let gNav=false;
 let cxm=.5,prevL=null,hasPrev=false,mot=null,frame=null,sm=0,lv=0,P=[],lastFail=0;
 const COL=[['الأحمر','#ff4d5e',h=>h<14||h>346],['الأصفر','#ffd23f',h=>h>44&&h<68],['الأخضر','#38c172',h=>h>85&&h<160],['الأزرق','#3d8bff',h=>h>195&&h<250],['البرتقالي','#ff9a2e',h=>h>=18&&h<=38]];
 const MOV=[['ارفع يديك للأعلى','⬆️','top'],['انزل للأسفل','⬇️','bot'],['تحرّك ناحية اليسار','⬅️','left'],['تحرّك ناحية اليمين','➡️','right'],['اقفز عاليًا','🦘','all']];
 const ANI=['🐻','🦁','🐼','🐵','🐶','🦄','🐯','🐸','🐰','🦊'];
 const OKW=['أحسنت','أحسنت يا بطل','برافو','ممتاز','مثالي','رائع'];
-const TT={dance:'💃 الرقص',copy:'🧒 قلّد الحركة',color:'🎨 أشر إلى اللون',balloons:'🎈 البالونات',freeze:'🧊 تجمّد',math:'🧮 غابة الأرقام',letters:'🔤 الكرات السحرية',dragon:'🐉 طيران التنين',fruit:'🍊 قطف الثمار',rocks:'💎 حطّم الصخور',animals:'🐰 قلّد الحيوانات',hedge:'🦔 القنافذ',pads:'👣 الدوائر'};
+const TT={dance:'💃 الرقص',copy:'🧒 قلّد الحركة',color:'🎨 أشر إلى اللون',balloons:'🎈 البالونات',freeze:'🧊 تجمّد',math:'🧮 غابة الأرقام',letters:'🔤 الكرات السحرية',dragon:'🐉 طيران التنين',fruit:'🍊 قطف الثمار',rocks:'💎 حطّم الصخور',animals:'🐰 قلّد الحيوانات',hedge:'🦔 القنافذ',pads:'👣 الدوائر',shapes:'🔷 أين الشكل؟',zoo:'🦁 أين الحيوان؟',fish:'🐟 السمك',bfly:'🦋 الفراشات',jump:'🐸 القفز',space:'🚀 الفضاء',birds:'🐦 الطيور',stars:'⭐ النجوم',gmenu:'🖐️ لوّح فوق اللعبة'};
 const P4={top:[.5,.25],bot:[.5,.8],left:[.17,.52],right:[.83,.52]};
 const rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.random()*a.length|0];
 
@@ -254,22 +264,13 @@ function start(k,btn){
   if(btn){if(btn.disabled)return;btn.disabled=true;btn.dataset.old=btn.innerHTML;btn.innerHTML='<i>⏳</i>جاري التحميل...';btn.style.opacity='.7'}
   const my=++startTok;
   try{unlockAudioNow()}catch(e){}
-  game=k;clearTimeout(endT);$('end').hidden=true;$('err').textContent='';
+  game=k;gNav=(k=='gmenu');clearTimeout(endT);$('end').hidden=true;$('err').textContent='';
   try{say('مرحبًا يا أبطال! '+HI[k],true)}catch(e){}
   try{if(navigator.wakeLock)navigator.wakeLock.request('screen').then(l=>{wl=l}).catch(()=>{})}catch(e){}
   cam().then(()=>{
     restoreBtn(btn);
     if(my!==startTok)return;
-    $('menu').hidden=true;$('hud').hidden=false;$('ttl').textContent=TT[k];
-    stars=0;goal=1e9;$('st').textContent='⭐ 0';P=[];
-    S={t0:Date.now(),pr:0,an:0,hold:0,b:[],sp:0,cnt:0,ph:'move',sc:0,bad:0,tgt:-1,end:Date.now()+18e5,over:0};
-    run=true;
-    try{
-      if(k=='dance'){prompt_('ارقص مع الحيوان! 💃');music=true}
-      else if(k=='freeze'){S.ph='move';S.t0=Date.now();music=true;prompt_('ارقص مع الموسيقى! 🎵')}
-      else if(k=='balloons'){S.tgt=age==5?rnd(0,5)|0:-1;balPrompt()}
-      else nextRound();
-    }catch(e){console.error(e);$('pr').textContent='⚠️ '+e.message}
+    begin(k);
   }).catch(e=>{
     restoreBtn(btn);
     if(my!==startTok)return;
@@ -281,13 +282,32 @@ function start(k,btn){
   });
 }
 
+/* بدء لعبة (الكاميرا تعمل مسبقًا) */
+function begin(k){
+ game=k;clearInterval(tuI);$('end').hidden=true;
+ $('menu').hidden=true;$('hud').hidden=false;$('ttl').textContent=TT[k];$('pr').hidden=(k=='gmenu');$('mt').hidden=(k=='gmenu');
+ stars=0;goal=1e9;$('st').textContent='⭐ 0';P=[];music=false;
+ S={t0:Date.now(),pr:0,an:0,hold:0,b:[],sp:0,cnt:0,ph:'move',sc:0,bad:0,tgt:-1,end:Date.now()+18e5,over:0};
+ run=true;
+ try{
+  if(k=='dance'){prompt_('ارقص مع الحيوان! 💃');music=true}
+  else if(k=='freeze'){S.ph='move';S.t0=Date.now();music=true;prompt_('ارقص مع الموسيقى! 🎵')}
+  else if(k=='balloons'){S.tgt=age==5?rnd(0,5)|0:-1;balPrompt()}
+  else if(k=='gmenu')initGM();
+  else nextRound();
+ }catch(e){console.error(e);$('pr').textContent='⚠️ '+e.message}
+}
+/* التنقل بالإشارة: الانتقال إلى لعبة أو العودة لقائمة الإشارة */
+function gmLaunch(k){if(k=='touch'){gNav=false;home();return}gNav=true;beep(880,.15);say('مرحبًا يا أبطال! '+HI[k],true);begin(k)}
+function back(){if(gNav&&game!='gmenu')gmLaunch('gmenu');else home()}
+
 function home(){startTok++;clearInterval(tuI);run=false;music=false;clearTimeout(endT);vstop();$('hud').hidden=true;$('end').hidden=true;$('menu').hidden=false;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;frame=null;P=[];try{if(wl){wl.release();wl=null}}catch(e){}}
 function balPrompt(){if(S.tgt<0)prompt_('فرقع البالونات بيدك! 🎈',true);else prompt_('فرقع البالونات '+COL[S.tgt][0],true)}
 function nextRound(){S.hold=0;S.t0=Date.now();
  if(game=='copy'){S.m=pick(age==3?[MOV[0],MOV[2],MOV[3],MOV[4]]:MOV);prompt_(S.m[0],true)}
  else if(game=='color'){const c=[...COL].sort(()=>Math.random()-.5).slice(0,4),d=['top','bot','left','right'];S.cols={};d.forEach((k,i)=>S.cols[k]=c[i]);S.tgt=pick(d);S.dw={top:0,bot:0,left:0,right:0};S.oh=0;prompt_('أين اللون '+S.cols[S.tgt][0]+'؟ أشر إليه',true)}
  else if(game=='balloons'&&age==5&&S.cnt%3==0){S.tgt=rnd(0,5)|0;balPrompt()}
- else if(game=='math')newMath();else if(game=='letters')newLetter();else if(game=='dragon'&&!S.it){S.it=[];S.dx=.5;S.n=0;prompt_('حرّك جسمك يمينًا ويسارًا لتجمع الكرز! 🍒',true)}
+ else if(game=='math')newMath();else if(game=='letters')newLetter();else if(game=='shapes')newShape();else if(game=='zoo')newZoo();else if(game=='jump')newJump();else if(MV[game]&&!S.hg){S.hg=[];prompt_(MV[game].p,true)}else if(game=='dragon'&&!S.it){S.it=[];S.dx=.5;S.n=0;prompt_('حرّك جسمك يمينًا ويسارًا لتجمع الكرز! 🍒',true)}
  else if(game=='fruit'&&!S.fr)initFruit();else if(game=='rocks'&&!S.rk)initRocks();else if(game=='pads')newPad();else if(game=='animals')newAni();else if(game=='hedge'&&!S.hg){S.hg=[];prompt_('المس القنافذ بيدك! 🦔',true)}}
 function analyze(){if(v.readyState<2||!v.videoWidth)return;
  const vw=v.videoWidth,vh=v.videoHeight;if(vw+'x'+vh!==vk){vk=vw+'x'+vh;fit();return}const s=Math.max(AW/vw,AH/vh),dw=vw*s,dh=vh*s;
@@ -302,6 +322,7 @@ function fr(x0,y0,x1,y1){if(!mot)return 0;const a=Math.max(0,x0*AW|0),b=Math.max
 function hm(r,gg,b,fn){const m=Math.max(r,gg,b),n=Math.min(r,gg,b),d=m-n;if(m<90||d/m<.5)return false;const h=m==r?((gg-b)/d+6)%6:m==gg?(b-r)/d+2:(r-gg)/d+4;return fn(h*60)}
 function cf(x0,y0,x1,y1,fn){if(!frame)return 0;const G=Math.min(3,Math.max(1,110/Math.max(20,avgB)));const a=x0*AW|0,b=y0*AH|0,c=Math.ceil(x1*AW),d=Math.ceil(y1*AH);let k=0,t=0;for(let y=b;y<d;y++)for(let x=a;x<c;x++){const o=(y*AW+x)*4;if(hm(Math.min(255,frame[o]*G),Math.min(255,frame[o+1]*G),Math.min(255,frame[o+2]*G),fn))k++;t++}return t?k/t:0}
 function tick(){if(!run)return;const rem=Math.max(0,S.end-Date.now()),p2=n=>(n<10?'0':'')+n;$('tm').textContent=p2(rem/60000|0)+':'+p2((rem/1000|0)%60);if(rem<=0&&!S.over)timeUp();$('ttl').textContent=TT[game]+(low?' 🌙':'');$('mt').firstChild.style.width=lv*100+'%';const k=game,now=Date.now();
+ if(gNav&&k!='gmenu'){if(fr(.9,.62,1,.8)>.16)S.hz=(S.hz||0)+1;else S.hz=Math.max(0,(S.hz||0)-1);if(S.hz>=28){S.hz=0;gmLaunch('gmenu');return}}
  if(k=='dance'){if(sm>(age==3?.03:.06))S.pr+=lv;const need=age==3?18:28;if(S.pr>=need){S.pr=0;S.an++;burst(W/2,H/2);ok()}else if(now-S.t0>14000){S.t0=now;say('تحرّك أكثر! هيا نرقص')}}
  else if(k=='copy'){if(!S.m)return;const m=S.m[2],f=m=='top'?fr(0,0,1,.38):m=='bot'?fr(0,.62,1,1):m=='left'?fr(0,0,.4,1):m=='right'?fr(.6,0,1,1):sm,th=age==3?.07:.1;
   if(f>th)S.hold++;else S.hold=Math.max(0,S.hold-1);const need=age==3?7:6;S.pg=S.hold/need;
@@ -322,13 +343,20 @@ function tick(){if(!run)return;const rem=Math.max(0,S.end-Date.now()),p2=n=>(n<1
    if(r.hp<=0){burst(r.x*W,r.y*H,'#ff4d6d',30);S.rk=S.rk.filter(q=>q!==r);addRock();ok();break}}}}
  else if(k=='pads'){if(S.pd==null)return;const p=PD[S.pd];if(fr(p[0]-.14,.7,p[0]+.14,1)>.17)S.dw++;else S.dw=Math.max(0,S.dw-1);
   if(S.dw>=4){burst(p[0]*W,p[1]*H,'#7dff9a',26);ok()}else if(now-S.t0>25000){fail();S.t0=now}}
- else if(k=='hedge'){if(!S.hg)return;const R=Math.min(W,H)*.1;for(const h of S.hg){const rw=R/W*1.3,rh=R/H*1.3;if(fr(h.x-rw,h.y-rh,h.x+rw,h.y+rh)>.2){burst(h.x*W,h.y*H,'#ffb02e',22);h.x=9;ok();break}}}
+ else if(k=='hedge'||MV[k]){if(!S.hg)return;const R=Math.min(W,H)*.1;for(const h of S.hg){const rw=R/W*1.3,rh=R/H*1.3;if(fr(h.x-rw,h.y-rh,h.x+rw,h.y+rh)>.2){burst(h.x*W,h.y*H,'#ffb02e',22);h.x=9;ok();break}}}
  else if(k=='animals'){const m=S.cur;if(!m)return;const th=age==3?.07:.1;let f=0;
   if(m.k=='hop')f=sm>th*.6?1:0;else if(m.k=='wings')f=(fr(0,0,.3,.75)>th&&fr(.7,0,1,.75)>th)?1:0;else if(m.k=='bot')f=fr(0,.62,1,1)>th?1:0;
   else{if(fr(0,0,.4,1)>th)S.sl=1;f=(S.sl&&fr(.6,0,1,1)>th)?1:0}
   const need=m.k=='sway'?1:6;if(f)S.hold++;else if(m.k!='sway')S.hold=Math.max(0,S.hold-1);S.pg=S.hold/need;
   if(S.hold>=need){burst(W*.2,H*.65);ok()}else if(now-S.t0>(age==3?14000:10000)){fail();S.sl=0;S.hold=0;S.t0=now}}
- else if(k=='math'||k=='letters'){if(!S.orbs)return;for(const o of S.orbs){const f=fr(o.x-.12,o.y-.09,o.x+.12,o.y+.09);if(f>.16)o.dw++;else o.dw=Math.max(0,o.dw-1);if(o.dw>=(age==3?5:6)){o.dw=0;if(o.ok){burst(o.x*W,o.y*H,'#ffd23f',30);ok();break}else{o.sh=14;fail()}}}if(S.orbs&&now-S.t0>30000){fail();nextRound()}}
+ else if(k=='math'||k=='letters'||k=='shapes'||k=='zoo'){if(!S.orbs)return;for(const o of S.orbs){const f=fr(o.x-.12,o.y-.09,o.x+.12,o.y+.09);if(f>.16)o.dw++;else o.dw=Math.max(0,o.dw-1);if(o.dw>=(age==3?5:6)){o.dw=0;if(o.ok){burst(o.x*W,o.y*H,'#ffd23f',30);ok();break}else{o.sh=14;fail()}}}if(S.orbs&&now-S.t0>30000){fail();nextRound()}}
+ else if(k=='gmenu'){if(!S.gm)return;gmLay();if(now<S.gmT){S.gm.forEach(o=>o.dw=0);return}let best=null;
+  for(const o of S.gm){if(fr(o.x0/W,o.y0/H,o.x1/W,o.y1/H)>.16)o.dw++;else o.dw=Math.max(0,o.dw-1);if(o.dw>=10&&(!best||o.dw>best.dw))best=o}
+  if(best){const kk=best.k;S.gm=null;gmLaunch(kk)}}
+ else if(k=='jump'){if(S.jt==null)return;const th=age==3?.04:.06;
+  if(!S.jup&&sm>th&&now-S.jl>600){S.jup=1;S.jl=now;S.jc++;beep(480+S.jc*90,.12,'sine');burst(W*.5,H*.66,'#7dff9a',10);if(S.jc>=S.jt){ok();return}}
+  else if(S.jup&&sm<th*.7)S.jup=0;
+  if(now-S.t0>40000){fail();newJump()}}
  else if(k=='freeze'){const el=(now-S.t0)/1000;
   if(S.ph=='move'){S.sc+=lv;if(el>(age==3?6:8)){if(S.sc<7){S.t0=now;S.sc=0;say('تحرّك أكثر!')}else{S.ph='freeze';S.t0=now;S.bad=0;music=false;prompt_('🧊 تجمّد! لا تتحرك',true);banner('🧊 تجمّد!')}}}
   else{if(el>1.4&&sm>.045)S.bad++;if(el>(age==3?4:5)){S.ph='move';S.t0=now;S.sc=0;music=true;if(S.bad<=2){ok()}else fail();prompt_('ارقص مع الموسيقى! 🎵')}}}}
@@ -355,7 +383,7 @@ function drawCam(w){
   if(PX>2||PY>2){g.strokeStyle='rgba(255,255,255,.35)';g.lineWidth=3;g.strokeRect(PX,PY,W,H)}
 }
 
-function draw(t){g.shadowBlur=0;g.shadowColor='transparent';g.shadowOffsetY=0;g.globalAlpha=1;drawCam(WRL[game]);g.save();g.translate(PX,PY);g.beginPath();g.rect(0,0,W,H);g.clip();draw2(t);g.restore()}
+function draw(t){g.shadowBlur=0;g.shadowColor='transparent';g.shadowOffsetY=0;g.globalAlpha=1;drawCam(WRL[game]);g.save();g.translate(PX,PY);g.beginPath();g.rect(0,0,W,H);g.clip();draw2(t);if(gNav&&game!='gmenu')homeZone();g.restore()}
 
 function foxChar(x,y,s,pose,t){
   const o='#ff8c42',od='#d95f14',c='#fff1de';
@@ -451,12 +479,12 @@ function draw2(t){
   vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(20,0,50,.26)');g.fillStyle=vg;g.fillRect(0,0,W,H);
 
   if(k=='dance'){
-    const cx=W/2,cy=H*.5,s=Math.min(W,H)*.5,b=Math.sin(t/180)*lv*30;
-    const gr=g.createRadialGradient(cx,cy,10,cx,cy,s*.8);
+    const cx=W/2,cy=H*.54,s=Math.min(W,H)*.3,b=Math.sin(t/180)*lv*20;
+    const gr=g.createRadialGradient(cx,cy,10,cx,cy,s*1.3);
     gr.addColorStop(0,'rgba(255,255,255,.45)');gr.addColorStop(1,'rgba(255,255,255,0)');
     g.fillStyle=gr;g.fillRect(0,0,W,H);
     drawImg('',cx,cy+b,s*(.9+lv*.25),Math.sin(t/160)*(.05+lv*.35),ANI[S.an%ANI.length]);
-    g.strokeStyle='#ffd23f';g.lineWidth=10;g.lineCap='round';g.beginPath();g.arc(cx,cy,s*.62,-1.57,-1.57+6.283*Math.min(1,S.pr/(age==3?18:28)));g.stroke()
+    g.strokeStyle='#ffd23f';g.lineWidth=10;g.lineCap='round';g.beginPath();g.arc(cx,cy,s*.75,-1.57,-1.57+6.283*Math.min(1,S.pr/(age==3?18:28)));g.stroke()
   }
   else if(k=='copy'&&S.m){
     const m=S.m[2];glow(m=='bot'?'bot':m=='all'?'':m);
@@ -522,6 +550,29 @@ function draw2(t){
     emo('👣',PD[S.pd][0]*W,PD[S.pd][1]*H-H*.12+Math.sin(t/200)*8,Math.min(W,H)*.1);
     drawImg('',W*(S.pd==2?.15:.85),H*.55-Math.abs(Math.sin(t/250))*H*.05,Math.min(W,H)*.2,0,'🦊');
   }
+  else if(MV[k]){
+    if(!S.hg)return;const mv=MV[k],dt=.016;S.sp-=dt;
+    if(S.sp<=0){S.sp=age==3?1.2:.9;const d=Math.random()<.5?1:-1;S.hg.push({x:d>0?-.1:1.1,y:pick([.34,.5,.66]),d:d,v:rnd(.1,.17)*(age==3?.85:1.1),ph:rnd(0,6),e:pick(mv.e)})}
+    const R=Math.min(W,H)*.1;
+    for(const h of S.hg){h.x+=h.d*h.v*dt;h.ph+=mv.ps;g.save();g.translate(h.x*W,h.y*H+Math.sin(h.ph)*mv.am*(mv.rel?H:1));if(mv.fl&&h.d>0)g.scale(-1,1);drawImg('',0,0,R*1.6,0,h.e);g.restore()}
+    S.hg=S.hg.filter(h=>h.x>-.2&&h.x<1.2)
+  }
+  else if(k=='jump'){
+    if(S.jt==null)return;const sz=Math.min(W,H)*.3,el=Date.now()-(S.jl||0),jp=el<350?Math.sin(el/350*Math.PI)*H*.14:0;
+    for(let i=0;i<S.jt;i++){g.save();g.globalAlpha=i<S.jc?1:.35;goldStar(W*(.5+(i-(S.jt-1)/2)*.1),H*.3,Math.min(W,H)*.045);g.restore()}
+    drawImg('',W*.5,H*.64-jp,sz,0,'🐸')
+  }
+  else if(k=='gmenu'){
+    if(!S.gm)return;gmLay();
+    for(const o of S.gm){const w=o.x1-o.x0,h=o.y1-o.y0,cx=o.x0+w/2,p=Math.min(1,o.dw/10);
+      g.save();rr(o.x0,o.y0,w,h,14);g.fillStyle='rgba(22,10,53,.72)';g.fill();
+      if(p>0){g.fillStyle='rgba(255,255,255,'+(.12+.3*p)+')';g.fill()}
+      g.strokeStyle=p>0?'#fff':o.c;g.lineWidth=p>0?4:2.5;g.stroke();
+      if(p>0){g.fillStyle='#ffd23f';g.fillRect(o.x0+10,o.y1-10,(w-20)*p,5)}
+      g.restore();
+      emo(o.e,cx,o.y0+h*.38,Math.min(w*.4,h*.4));
+      g.save();g.font='800 '+Math.max(10,Math.min(w*.15,h*.14,15))+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#fff';g.fillText(o.l,cx,o.y0+h*.76,w-8);g.restore()}
+  }
   else if(k=='animals'){
     const m=S.cur;if(!m)return;const sz=Math.min(W*.09,H*.11);
     S.seq.forEach((a,i)=>{
@@ -542,7 +593,7 @@ function draw2(t){
     g.strokeText(wd,W*.2,H*.45);g.fillText(wd,W*.2,H*.45);g.restore();
     g.strokeStyle='#46e0a0';g.lineWidth=8;g.lineCap='round';g.beginPath();g.arc(W-45,H-50,26,-1.57,-1.57+6.283*(S.pg||0));g.stroke()
   }
-  else if(k=='math'||k=='letters'){
+  else if(k=='math'||k=='letters'||k=='shapes'||k=='zoo'){
     if(!S.orbs||!S.q)return;const q=S.q,hs=Math.min(W*.12,H*.07);
     if(q.k=='cnt'){for(let i=0;i<q.n;i++)goldStar(W*(.5+(i-(q.n-1)/2)*.12),H*.2+Math.sin(t/300+i)*6,hs*.8)}
     else if(q.txt){
@@ -552,7 +603,7 @@ function draw2(t){
     }
     else{const ey=H*.2+Math.sin(t/260)*8,es=Math.min(W*.2,H*.16);g.save();g.fillStyle='rgba(255,255,255,.95)';g.beginPath();g.arc(W/2,ey,es*.7,0,6.3);g.fill();g.strokeStyle='#8e5cff';g.lineWidth=5;g.stroke();g.restore();emo(q.e,W/2,ey,es)}
     S.orbs.forEach((o,i)=>orb(o,t,['#8e5cff','#ff6fb1','#35c8ff','#ffb02e'][i]));
-    emo(k=='math'?'🐱':'🧚',W/2,H*.9+Math.sin(t/200)*6,Math.min(W,H)*.12)
+    emo(k=='math'?'🐱':k=='shapes'?'🦄':k=='zoo'?'🦉':'🧚',W/2,H*.9+Math.sin(t/200)*6,Math.min(W,H)*.12)
   }
   else if(k=='dragon'){
     if(!S.it)return;const dt=.016;S.dx+=(cxm-S.dx)*.15;const dxp=S.dx*W,dy=H*.78;S.sp-=dt;
@@ -600,7 +651,7 @@ function drawP(){
 }
 
 /* ================== العوالم ================== */
-const WRL={dance:'magic',copy:'jungle',color:'ocean',balloons:'sky',freeze:'magic',math:'jungle',letters:'magic',dragon:'sky',fruit:'jungle',rocks:'ocean',animals:'jungle',hedge:'jungle',pads:'magic'};
+const WRL={dance:'magic',copy:'jungle',color:'ocean',balloons:'sky',freeze:'magic',math:'jungle',letters:'magic',dragon:'sky',fruit:'jungle',rocks:'ocean',animals:'jungle',hedge:'jungle',pads:'magic',shapes:'magic',zoo:'jungle',fish:'ocean',bfly:'jungle',jump:'jungle',space:'magic',birds:'sky',stars:'magic',gmenu:'magic'};
 const WD={jungle:['rgba(20,130,65,.16)','rgba(0,70,35,.05)'],ocean:['rgba(0,130,210,.16)','rgba(0,70,140,.06)'],magic:['rgba(125,65,205,.16)','rgba(65,28,135,.06)'],sky:['rgba(95,185,255,.14)','rgba(205,242,255,.04)']};
 const ARW=['صفر','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة','عشرة','أحد عشر','اثنا عشر','ثلاثة عشر','أربعة عشر','خمسة عشر','ستة عشر','سبعة عشر','ثمانية عشر','تسعة عشر','عشرون'];
 const WRD=[['بطة','🦆','ب'],['أسد','🦁','أ'],['تفاحة','🍎','ت'],['جمل','🐫','ج'],['فيل','🐘','ف'],['قطة','🐱','ق'],['سمكة','🐟','س'],['موز','🍌','م'],['نجمة','⭐','ن'],['حصان','🐴','ح']];
@@ -771,6 +822,20 @@ function newLetter(){
  prompt_('ما أول حرف في كلمة '+w[0]+'؟',true)
 }
 
+/* ===== ألعاب جديدة + التنقل بالإشارة ===== */
+const MV={fish:{e:['🐟','🐠','🐡'],ps:.2,am:5,fl:1,p:'المس السمك بيدك! 🐟'},bfly:{e:['🦋','🐝','🐞'],ps:.3,am:.035,rel:1,p:'المس الفراشات بيدك! 🦋'},space:{e:['🚀','🛸','🛰️'],ps:.15,am:.02,rel:1,p:'المس المركبات الفضائية! 🚀'},birds:{e:['🐦','🕊️','🦜'],ps:.25,am:.03,rel:1,fl:1,p:'المس الطيور بيدك! 🐦'},stars:{e:['⭐','🌟','✨'],ps:.2,am:.02,rel:1,p:'المس النجوم بيدك! ⭐'}};
+const SHP=[['الدائرة','●'],['المربع','■'],['المثلث','▲'],['النجمة','★'],['المعين','◆']];
+const ZOO=[['الأسد','🦁'],['الفيل','🐘'],['القطة','🐱'],['الأرنب','🐰'],['الحصان','🐴'],['البطة','🦆'],['السمكة','🐟'],['الجمل','🐫']];
+function newShape(){const w=pick(SHP);S.q=age==3?{k:'shp',txt:w[1]}:{k:'shp',e:'❓'};const ds=shuffle(SHP.filter(x=>x!==w)).slice(0,3).map(x=>x[1]);setOrbs([w[1]].concat(ds),0);prompt_('أين '+w[0]+'؟',true)}
+function newZoo(){const w=pick(ZOO);S.q={k:'zoo',e:'🔍'};const ds=shuffle(ZOO.filter(x=>x!==w)).slice(0,3).map(x=>x[1]);setOrbs([w[1]].concat(ds),0);prompt_('أين '+w[0]+'؟',true)}
+function newJump(){S.jt=age==3?3:5;S.jc=0;S.jup=0;S.jl=Date.now();S.t0=Date.now();prompt_('اقفز '+ARW[S.jt]+' مرات!',true)}
+const GMI=[['fruit','🍊','قطف الثمار','#ff8a3d'],['rocks','💎','حطّم الصخور','#37c8d8'],['animals','🐰','قلّد الحيوانات','#b784ff'],['hedge','🦔','اصطد القنافذ','#7fdc5a'],['pads','👣','ادعس الدوائر','#ffd84d'],['math','🧮','غابة الأرقام','#2fd27a'],['letters','🔤','الكرات السحرية','#a58bff'],['dragon','🐉','طيران التنين','#59d0ff'],['dance','💃','ارقص مع الحيوانات','#ff8a5c'],['copy','🧒','قلّد الحركة','#4fb7ff'],['color','🎨','أشر إلى اللون','#47e0a0'],['balloons','🎈','فرقع البالونات','#ffd23f'],['freeze','🧊','ارقص وتجمّد','#8fd3ff'],['shapes','🔷','أين الشكل؟','#ff9bd2'],['zoo','🦁','أين الحيوان؟','#ffcf5a'],['fish','🐟','اصطد السمك','#4fd6ff'],['bfly','🦋','اصطد الفراشات','#8be36a'],['jump','🐸','قفز الضفدع','#7dff9a'],['space','🚀','مركبات الفضاء','#a78bfa'],['birds','🐦','اصطد الطيور','#8fd0ff'],['stars','⭐','اجمع النجوم','#ffe27a'],['touch','📱','القائمة العادية','#bbbbbb']];
+function initGM(){S.gm=GMI.map(a=>({k:a[0],e:a[1],l:a[2],c:a[3],dw:0,x0:0,y0:0,x1:0,y1:0}));S.gmT=Date.now()+1800;gmLay()}
+function gmLay(){if(!S.gm)return;const n=S.gm.length,cols=W>H?8:3,rows=Math.ceil(n/cols),top=Math.max(64,H*.17),pad=8,tw=(W-pad*2)/cols,th=(H-top-pad)/rows;
+ S.gm.forEach((o,i)=>{const c=i%cols,r=i/cols|0;o.x0=pad+c*tw+3;o.y0=top+r*th+3;o.x1=pad+(c+1)*tw-3;o.y1=top+(r+1)*th-3})}
+function homeZone(){const x=W*.95,y=H*.71,r=Math.min(W,H)*.065;g.save();g.globalAlpha=.85;g.fillStyle='rgba(22,10,53,.65)';g.strokeStyle='#fff';g.lineWidth=3;g.beginPath();g.arc(x,y,r,0,6.3);g.fill();g.stroke();
+ if(S.hz>0){g.strokeStyle='#ffd23f';g.lineWidth=6;g.beginPath();g.arc(x,y,r+7,-1.57,-1.57+6.283*Math.min(1,S.hz/28));g.stroke()}g.restore();emo('🏠',x,y,r*1.1)}
+
 function newPad(){S.pd=S.pd==null?1:(S.pd+1+(Math.random()*2|0))%3;S.dw=0;prompt_('ادعس الدائرة المضيئة! 👣',true)}
 function newAni(){const sh=()=>[...ANM].sort(()=>Math.random()-.5);if(!S.seq){S.seq=sh();S.ai=0}else{S.ai++;if(S.ai>=4){S.seq=sh();S.ai=0}}S.cur=S.seq[S.ai];S.hold=0;S.sl=0;S.pg=0;S.t0=Date.now();prompt_(S.cur.t,true)}
 async function viewMode(){mode=(mode+1)%3;fill=mode==2;try{await cam()}catch(e){}$('pr').textContent=['📐 عرض واسع','📐 عرض كامل للجسم','📐 ملء الشاشة'][mode]}
@@ -778,14 +843,14 @@ function timeUp(){S.over=1;let c=10;$('end').hidden=false;$('ep').textContent='�
  clearInterval(tuI);tuI=setInterval(()=>{c--;$('ep').textContent='سنكمل اللعب تلقائيًا بعد '+c+' ثوانٍ إن لم تختر شيئًا';if(c<=0)extend()},1000)}
 function extend(){clearInterval(tuI);$('end').hidden=true;S.end=Date.now()+18e5;S.over=0;say('هيا نكمل اللعب!',true)}
 
-const HI={dance:'هيا نرقص',copy:'هيا نقلّد الحركة',color:'هيا نبحث عن الألوان',balloons:'هيا نفرقع البالونات',freeze:'هيا نرقص ونتجمد',math:'هيا نحل المسائل',letters:'هيا نتعلم الحروف',dragon:'هيا نطير مع التنين',fruit:'هيا نقطف الثمار',rocks:'هيا نحطم الصخور',animals:'هيا نقلد الحيوانات',hedge:'هيا نصطاد القنافذ',pads:'هيا ندعس الدوائر'};
+const HI={dance:'هيا نرقص',copy:'هيا نقلّد الحركة',color:'هيا نبحث عن الألوان',balloons:'هيا نفرقع البالونات',freeze:'هيا نرقص ونتجمد',math:'هيا نحل المسائل',letters:'هيا نتعلم الحروف',dragon:'هيا نطير مع التنين',fruit:'هيا نقطف الثمار',rocks:'هيا نحطم الصخور',animals:'هيا نقلد الحيوانات',hedge:'هيا نصطاد القنافذ',pads:'هيا ندعس الدوائر',shapes:'هيا نبحث عن الأشكال',zoo:'هيا نبحث عن الحيوانات',fish:'هيا نصطاد السمك',bfly:'هيا نصطاد الفراشات',jump:'هيا نقفز مثل الضفدع',space:'هيا نصطاد المركبات الفضائية',birds:'هيا نصطاد الطيور',stars:'هيا نجمع النجوم',gmenu:'لوّحوا بأيديكم فوق اللعبة التي تريدونها'};
 function allPhrases(){const P=[],a=x=>{x=norm(x);if(x&&P.indexOf(x)<0)P.push(x)};
  Object.keys(HI).forEach(k=>a('مرحبًا يا أبطال! '+HI[k]));OKW.forEach(a);a('حاول مرة أخرى');a('تحرّك أكثر! هيا نرقص');a('تحرّك أكثر!');a('تجمّد! لا تتحرك');
  MOV.forEach(m=>a(m[0]));COL.forEach(c=>{a('أين اللون '+c[0]+'؟ أشر إليه');a('فرقع البالونات '+c[0]);a('اقطف الثمرة ذات اللون '+c[0])});
  a('فرقع البالونات بيدك!');a('كم عدد النجوم؟');for(let i=1;i<6;i++)for(let j=1;j<6;j++)a(ARW[i]+' زائد '+ARW[j]+' يساوي كم؟');
  WRD.forEach(w=>a('ما أول حرف في كلمة '+w[0]+'؟'));a('حرّك جسمك يمينًا ويسارًا لتجمع الكرز!');ARW.slice(1).forEach(a);
  a('مدّ يدك للأعلى واقطف الثمار المضيئة!');a('حطّم الصخور بيدك لتجمع الجواهر!');a('ادعس الدائرة المضيئة!');a('المس القنافذ بيدك!');
- ANM.forEach(m=>a(m.t));a('انتهت ثلاثون دقيقة من اللعب. سنكمل تلقائيًا إذا لم تختر شيئًا');a('هيا نكمل اللعب!');return P}
+ ANM.forEach(m=>a(m.t));SHP.forEach(w=>a('أين '+w[0]+'؟'));ZOO.forEach(w=>a('أين '+w[0]+'؟'));a('المس السمك بيدك!');a('المس الفراشات بيدك!');a('المس المركبات الفضائية!');a('المس الطيور بيدك!');a('المس النجوم بيدك!');a('اقفز '+ARW[3]+' مرات!');a('اقفز '+ARW[5]+' مرات!');a('انتهت ثلاثون دقيقة من اللعب. سنكمل تلقائيًا إذا لم تختر شيئًا');a('هيا نكمل اللعب!');return P}
 
 let SPH=[],si=0,srecR=null,smic=null,sch=[];
 function studio(o){$('studio').hidden=!o;if(o){SPH=allPhrases();si=Math.min(si,SPH.length-1);sshow()}else{sstop(true);vstop();if(smic){smic.getTracks().forEach(t=>t.stop());smic=null}}}
