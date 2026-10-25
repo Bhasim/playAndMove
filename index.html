@@ -336,7 +336,8 @@ function tick(){if(!run)return;const rem=Math.max(0,S.end-Date.now()),p2=n=>(n<1
 /* ================== الرسم ================== */
 function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
 function ln(a,b,c,d,w,col){g.strokeStyle=col;g.lineWidth=w;g.lineCap='round';g.beginPath();g.moveTo(a,b);g.lineTo(c,d);g.stroke()}
-function emo(t,x,y,s,r){g.save();g.translate(x,y);g.rotate(r||0);g.font=s+'px system-ui,"Apple Color Emoji",sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(t,0,0);g.restore()}
+/* إصلاح: تثبيت fillStyle أسود معتم حتى لا يرث الإيموجي لونًا شفافًا من الرسم السابق (مشكلة Safari) */
+function emo(t,x,y,s,r){g.save();g.translate(x,y);g.rotate(r||0);g.fillStyle='#000';g.shadowColor='transparent';g.shadowBlur=0;g.font=s+'px system-ui,"Apple Color Emoji",sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(t,0,0);g.restore()}
 
 function drawCam(w){
   const tn=WD[w]||WD.magic,bg=g.createLinearGradient(0,0,0,SH);
@@ -409,6 +410,41 @@ function bigArrow(d,t){
   g.closePath();g.fill();g.stroke();g.restore();
   if(d=='all'){g.save();g.fillStyle='rgba(255,255,255,.9)';for(let i=0;i<3;i++){const yy=H*.5+90+i*22,sc=1-i*.22;g.globalAlpha=.8-i*.25;g.beginPath();g.ellipse(W*.7,yy,50*sc,10*sc,0,0,6.3);g.fill()}g.restore()}
 }
+
+/* ===== رسومات vector واضحة (بدل الإيموجي الشفاف) ===== */
+function goldStar(x,y,r){g.save();g.translate(x,y);g.shadowColor='rgba(255,170,0,.8)';g.shadowBlur=12;
+ g.fillStyle='#ffd23f';g.strokeStyle='#ff9a00';g.lineWidth=r*.12;g.lineJoin='round';g.beginPath();
+ for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r*.45:r;g.lineTo(Math.cos(a)*q,Math.sin(a)*q)}
+ g.closePath();g.fill();g.stroke();g.restore()}
+
+function cherry(x,y,s){g.save();g.translate(x,y);g.lineCap='round';
+ g.strokeStyle='#5a8f2e';g.lineWidth=s*.07;g.beginPath();
+ g.moveTo(-s*.28,s*.15);g.quadraticCurveTo(-s*.1,-s*.4,s*.1,-s*.55);
+ g.moveTo(s*.3,s*.2);g.quadraticCurveTo(s*.25,-s*.35,s*.1,-s*.55);g.stroke();
+ g.fillStyle='#3aa04a';g.beginPath();g.ellipse(s*.28,-s*.55,s*.2,s*.09,-.3,0,6.3);g.fill();
+ [[-.28,.3],[.3,.35]].forEach(p=>{const cx=p[0]*s,cy=p[1]*s,gr=g.createRadialGradient(cx-s*.08,cy-s*.08,s*.02,cx,cy,s*.26);
+  gr.addColorStop(0,'#ff8a96');gr.addColorStop(.5,'#e0112b');gr.addColorStop(1,'#8f0a1c');
+  g.fillStyle=gr;g.beginPath();g.arc(cx,cy,s*.26,0,6.3);g.fill();
+  g.fillStyle='rgba(255,255,255,.85)';g.beginPath();g.ellipse(cx-s*.09,cy-s*.1,s*.06,s*.035,-.6,0,6.3);g.fill()});
+ g.restore()}
+
+function hedgehog(x,y,s){g.save();g.translate(x,y);
+ g.fillStyle='#8a5a3a';[-.25,.2].forEach(d=>{g.beginPath();g.ellipse(d*s,s*.45,s*.11,s*.07,0,0,6.3);g.fill()});
+ const cx=-s*.1,cy=s*.08,rx=s*.55,ry=s*.42;
+ g.strokeStyle='#3b2412';g.lineWidth=s*.075;g.lineCap='round';
+ for(let i=0;i<24;i++){const a=Math.PI*(.88+i*.95/23),bx=cx+Math.cos(a)*rx*.85,by=cy+Math.sin(a)*ry*.85;
+  g.beginPath();g.moveTo(bx,by);g.lineTo(bx+Math.cos(a)*s*.24,by+Math.sin(a)*s*.24);g.stroke()}
+ g.fillStyle='#6b4326';g.beginPath();g.ellipse(cx,cy,rx,ry,0,0,6.3);g.fill();
+ g.strokeStyle='#4a2f1d';g.lineWidth=s*.04;
+ for(let i=0;i<9;i++){const a=Math.PI*(1+i*.8/8),bx=cx+Math.cos(a)*rx*.6,by=cy+Math.sin(a)*ry*.6;
+  g.beginPath();g.moveTo(bx,by);g.lineTo(bx+Math.cos(a)*s*.16,by+Math.sin(a)*s*.16);g.stroke()}
+ g.fillStyle='#f1d2a5';g.beginPath();g.ellipse(s*.5,s*.2,s*.3,s*.22,0,0,6.3);g.fill();
+ g.fillStyle='#e3b98a';g.beginPath();g.arc(s*.42,-s*.02,s*.08,0,6.3);g.fill();
+ g.fillStyle='#fff';g.beginPath();g.arc(s*.55,s*.12,s*.07,0,6.3);g.fill();
+ g.fillStyle='#111';g.beginPath();g.arc(s*.57,s*.12,s*.04,0,6.3);g.fill();
+ g.beginPath();g.arc(s*.78,s*.22,s*.06,0,6.3);g.fill();
+ g.restore()}
+
 function draw2(t){
   const k=game;scenery(WRL[k],t);
   const vg=g.createRadialGradient(W/2,H/2,Math.min(W,H)*.45,W/2,H/2,Math.max(W,H)*.75);
@@ -471,7 +507,7 @@ function draw2(t){
     const dt=.016;S.sp-=dt;
     if(S.sp<=0){S.sp=age==3?1.3:.95;const d=Math.random()<.5?1:-1;S.hg.push({x:d>0?-.1:1.1,y:pick([.36,.52,.68]),d:d,v:rnd(.1,.16)*(age==3?.85:1.1),ph:rnd(0,6)})}
     const R=Math.min(W,H)*.1;
-    for(const h of S.hg){h.x+=h.d*h.v*dt;h.ph+=.2;g.save();g.translate(h.x*W,h.y*H+Math.sin(h.ph)*4);if(h.d>0)g.scale(-1,1);emo('🦔',0,0,R*1.5);emo('🌰',0,-R*.95,R*.7);g.restore()}
+    for(const h of S.hg){h.x+=h.d*h.v*dt;h.ph+=.2;g.save();g.translate(h.x*W,h.y*H+Math.sin(h.ph)*4);if(h.d<0)g.scale(-1,1);hedgehog(0,0,R*1.7);g.restore()}
     S.hg=S.hg.filter(h=>h.x>-.2&&h.x<1.2)
   }
   else if(k=='pads'){
@@ -508,13 +544,13 @@ function draw2(t){
   }
   else if(k=='math'||k=='letters'){
     if(!S.orbs||!S.q)return;const q=S.q,hs=Math.min(W*.12,H*.07);
-    if(q.k=='cnt'){for(let i=0;i<q.n;i++)emo('🌟',W*(.5+(i-(q.n-1)/2)*.12),H*.2+Math.sin(t/300+i)*6,hs*1.3)}
+    if(q.k=='cnt'){for(let i=0;i<q.n;i++)goldStar(W*(.5+(i-(q.n-1)/2)*.12),H*.2+Math.sin(t/300+i)*6,hs*.8)}
     else if(q.txt){
       g.save();g.font='900 '+hs*1.5+'px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.direction='ltr';
       g.lineWidth=10;g.strokeStyle='#4a2a9a';g.fillStyle='#fff';g.lineJoin='round';
       g.strokeText(q.txt,W/2,H*.2);g.fillText(q.txt,W/2,H*.2);g.restore()
     }
-    else emo(q.e,W/2,H*.2+Math.sin(t/260)*8,Math.min(W*.2,H*.16));
+    else{const ey=H*.2+Math.sin(t/260)*8,es=Math.min(W*.2,H*.16);g.save();g.fillStyle='rgba(255,255,255,.95)';g.beginPath();g.arc(W/2,ey,es*.7,0,6.3);g.fill();g.strokeStyle='#8e5cff';g.lineWidth=5;g.stroke();g.restore();emo(q.e,W/2,ey,es)}
     S.orbs.forEach((o,i)=>orb(o,t,['#8e5cff','#ff6fb1','#35c8ff','#ffb02e'][i]));
     emo(k=='math'?'🐱':'🧚',W/2,H*.9+Math.sin(t/200)*6,Math.min(W,H)*.12)
   }
@@ -523,7 +559,7 @@ function draw2(t){
     if(S.sp<=0){S.sp=age==3?1:.75;S.it.push({x:rnd(.12,.88),y:-.05,k:Math.random()<(age==3?.15:.3)?'m':'c',vy:rnd(.2,.3)})}
     for(const i of S.it){
       i.y+=i.vy*dt;const ix=i.x*W,iy=i.y*H;
-      emo(i.k=='c'?'🍒':'👾',ix,iy,Math.min(W,H)*.1);
+      if(i.k=='c')cherry(ix,iy,Math.min(W,H)*.16);else emo('👾',ix,iy,Math.min(W,H)*.1);
       if(!i.d&&Math.abs(ix-dxp)<W*.14&&Math.abs(iy-dy)<H*.07){
         i.d=1;
         if(i.k=='c'){S.n++;burst(ix,iy,'#ff4d5e',16);ok(ARW[S.n])}
